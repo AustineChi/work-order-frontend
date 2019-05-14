@@ -1,0 +1,399 @@
+$background-color-dark: #101110;
+$background-color-lightBlue:#306483;
+$color-gray-dark: #777;
+$color-white: #fff;
+$color-yellow: #FCC04E;
+$color-gray-light: #F5F5FA;
+$color-gray-light-2: rgb(232, 240, 254);
+$color-red: #F26E6E;
+$color-green: #5cb85c;
+$color-blue: #073553;
+$height-footer: 60px;
+* {
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box
+}
+html {
+  min-height: 100%;
+  position: relative;
+  body {
+    margin-bottom: $height-footer;
+  }
+}
+.footer {
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  height: $height-footer;
+  background-color: $color-blue;
+  .footer-block {
+    margin: 20px 0;
+    color: $color-white
+  }
+}
+.center-align-text {
+  text-align: center
+}
+.App-logo {
+    animation: App-logo-spin infinite 10s linear;
+    height: 60px;
+    pointer-events: none;
+    margin: 10px 2%;
+    position: fixed;
+    left: 2%;
+  }
+  .App-logo2 {
+    height: 45px;
+    pointer-events: none;
+    margin: 10px 2%;
+    position: fixed;
+    top: 10px;
+  }
+  .App-link {
+    color: #61dafb;
+  }
+ .side-container {
+  width: 90%;
+  position: relative;
+  margin-right: 2%;
+ }
+  .body-wrapper {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: $color-gray-dark;
+    padding: 7px
+}
+.heading-primary {
+color: $color-white;
+text-transform: uppercase;
+backface-visibility: hidden;
+margin-bottom: 30px;
+}
+.heading-primary-main {
+display:block;
+font-size: 25px;
+font-weight: 900;
+letter-spacing: 15px; 
+margin-bottom: 10px;
+animation-name: moveInLeft;
+animation-duration: 1s;
+animation-timing-function: ease-out 
+
+}
+.heading-primary-sub {
+display: block;
+font-size: 14.7px;
+font-weight: 700;
+letter-spacing: 12px;
+animation-name: moveInRight;
+animation-duration: 1s;
+animation-timing-function: ease-out
+}
+.center-header-elements {
+   position: absolute;
+   top: 40%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+
+}
+.btn-add {
+  background-color: $color-green;
+  color: $color-white;
+  border-radius: 100px
+}
+.card-1 {
+  width: 600px;
+  padding: 60px 15px;
+}
+.inputStyle {
+  background-color: $color-gray-light-2;
+  padding-left: 6px;
+  margin: 0 0 20px 0;
+  height: 3rem;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  width: 90%;
+  outline: none;
+  display: block;
+  transition: all 0.3s;
+}
+.inputStyle2 {
+  padding-left: 6px;
+  margin: 0 0 20px 0;
+  height: 3rem;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  width: 100%;
+  outline: none;
+  display: block;
+  transition: all 0.3s;
+}
+.fullwidth{
+  width: 100%
+}
+.btn-animated {
+animation: moveUpButton .7s ease-out .5s;
+animation-fill-mode: backwards
+}
+.btn-login {
+  width: 90%;
+  height: 40px;
+  background-color: $color-blue;
+  color: $color-yellow;
+  margin: 20px 0;
+  padding: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  text-transform: capitalize;
+  border-radius: 100px;
+  border: none;
+  display: block;
+}
+@keyframes moveInLeft {
+   0%{
+       opacity: 0;
+       transform: translateX(-100px)
+   }
+   100%{
+opacity: 1;
+transform: translate(0)
+   }
+}
+@keyframes moveInRight {
+   0% {
+       opacity: 0;
+       transform: translateX(100px)
+           }
+          
+           100% {
+               opacity: 1;
+               transform: translate(0)
+           }
+}
+
+@keyframes moveUpButton {
+   0%{
+       opacity: 0;
+       transform: translateY(40px)
+   }
+   100%{
+opacity: 1;
+transform: translate(0)
+   }
+}
+.btn:link, .btn:visited{
+text-decoration: none;
+text-transform: uppercase;
+padding: 7px 40px;
+display: inline-block;
+border-radius: 100px;
+transition: all 1s;
+
+}
+
+.btn-white {
+   background-color: $color-white;
+   color: $color-gray-dark
+}
+.btn:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+   cursor: pointer;
+   color: #fff
+}
+.btn:active {
+   transform: translateY(-1px);
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+
+}
+
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  nav {
+    padding: 0.25rem 0;
+    padding-right: 3%;
+    background: $color-white;
+    color: $color-red;
+    overflow: auto;
+    position: relative;
+    z-index: 2;
+    ul li a {
+      text-decoration: none;
+      display: block;
+      padding: 7px 5px;
+      margin: 20px 10px;
+      color: $color-blue;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      line-height: 32px;
+      font-weight: bold;
+      transition: all 200ms linear;
+    }
+  }
+  
+
+  nav h1>a:hover {
+    background: none;
+    color: red; 
+  }
+.nav-list li {
+  display: block;
+}
+  .nav-list li a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #515151 !important;
+    color: #101110;
+    text-align: left
+  }
+  
+  .nav-list > li > a {
+    color: #C4C4C4;
+    font-size: 14px;
+    padding-left: 13px !important;
+    border-bottom: 1px solid #585858;
+  }
+  
+  .nav-list > li > a:hover {
+    background-color: #444444;
+  }
+
+  ul {
+    text-align: center;
+    float: right;
+  }
+  
+  ul li {
+    display: inline-block;
+  }
+  table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+  }
+   td .far, td .fas {
+     color: #E8E8E8;
+     margin: 5px;
+     cursor: pointer;
+   }
+
+   td:hover .far, td:hover .fas {
+    color: $color-gray-dark;
+    margin: 5px;
+  }
+
+  nav a:hover{
+    color: #C18055;
+    background: #fff;
+  }
+  
+  a:hover{
+  text-decoration: none
+  }
+  
+#sidebar {
+  z-index: 1000;
+  position: fixed;
+  left: 245px;
+  width: 240px;
+  height: 60vh;
+  margin-left: -240px;
+  margin-bottom: -60px;
+  background: #f8f9fa;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  border: 1px solid #dee2e6!important
+}
+
+.breadcrumb .btn {
+  position: absolute;
+  right: 20px;
+  margin-top: -7px;
+}
+.pull-right {
+  float: right!important;
+}
+.p5 {
+  padding: 0 7px;
+  font-size: 13px
+}
+.fs13 {
+  font-size: 13px
+}
+
+
+textarea {
+	display: block;
+	width: 100%;
+	border: 0;
+	padding: 10px 5px;
+  background: white no-repeat;
+  outline: none;
+  min-height: 37px;
+	/*
+	* IMPORTANT PART HERE
+	*/
+	
+  /* 2 imgs : 1px gray line (normal state) AND 2px green line (focus state) */
+	background-image: linear-gradient(to bottom, #1abc9c, #1abc9c), linear-gradient(to bottom, silver, silver);
+	/* sizes for the 2 images (default state) */
+	background-size: 0 2px, 100% 1px;
+	/* positions for the 2 images. Change both "50%" to "0%" or "100%" and tri again */
+	background-position: 50% 100%, 50% 100%;
+
+	/* animation solely on background-size */
+  transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+
+}
+
+input:focus,
+textarea:focus{
+  /* sizes for the 2 images (focus state) */
+	background-size: 100% 2px, 100% 1px;
+	outline: none;
+}
+.card-box {
+ max-width: 600px;
+ .card {
+ margin: 10px 0;
+ }
+ .card-body {
+   height: 70px
+ }
+}
+.fr {
+  float: right;
+}
+.wik1 {
+margin: 10px 0
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+.overflow-x {
+  overflow-x: auto
+}
+label {
+  width: 100%
+}
