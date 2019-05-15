@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import store from "./store/";
 import Footer from "./layout/footer";
 import Header from "./layout/header";
@@ -15,6 +16,7 @@ import Parts from "./views/assetManagement/parts";
 
 function App() {
   return (
+    <Provider store={store}>
     <div className="app">
       <BrowserRouter>
         <Header />
@@ -30,6 +32,7 @@ function App() {
         <Footer />
       </BrowserRouter>
     </div>
+    </Provider>
   );
 }
 

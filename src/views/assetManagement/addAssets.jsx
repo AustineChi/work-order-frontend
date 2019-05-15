@@ -96,6 +96,7 @@ const AddAsset = ({ handleChange, data }) => {
                 name="parentAsset"
                 className="browser-default custom-select custom-select-md mb-3"
               >
+                <option value="">None</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
               </select>
