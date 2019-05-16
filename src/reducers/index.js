@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import assetReducer from './assetReducer';
-import workOrderReducer from './workOrderReducer';
+import loginReducer from './loginReducer';
 
 export default combineReducers({
-    assets: assetReducer,
-    workOrders: workOrderReducer
+    LOGIN: loginReducer,
 })
