@@ -29,6 +29,8 @@ const AddPart = ({ handleChange, data }) => {
             </button>
           </div>
           <div className="modal-body">
+          <label htmlFor="">
+          Part Name:
             <input
               onChange={handleChange}
               value={data.partName}
@@ -37,6 +39,10 @@ const AddPart = ({ handleChange, data }) => {
               name="partName"
               placeholder="Enter Part Name"
             />
+            </label>
+
+            <label htmlFor="">
+           Description:
             <textarea
               onChange={handleChange}
               value={data.partDescription}
@@ -44,6 +50,7 @@ const AddPart = ({ handleChange, data }) => {
               className="wik1"
               placeholder="Enter the Part's description"
             />
+            </label>
             <label>
               Part Category:
               <select
@@ -56,7 +63,8 @@ const AddPart = ({ handleChange, data }) => {
                 <option value="2">Two</option>
               </select>
             </label>
-
+            <label htmlFor="">
+            Unit Cost:
             <input
               onChange={handleChange}
               value={data.unitCost}
@@ -65,6 +73,9 @@ const AddPart = ({ handleChange, data }) => {
               name="unitCost"
               placeholder="Mention the Unit Cost"
             />
+            </label>
+            <label htmlFor="">
+            Quantity:
             <input
               onChange={handleChange}
               value={data.quantity}
@@ -73,6 +84,9 @@ const AddPart = ({ handleChange, data }) => {
               name="quantity"
               placeholder="Enter the Quantity"
             />
+            </label>
+            <label htmlFor="">
+            Minimum Part Quantity:
             <input
               onChange={handleChange}
               value={data.minimumPartQuantity}
@@ -81,14 +95,20 @@ const AddPart = ({ handleChange, data }) => {
               name=""
               placeholder="Enter the Minimum Part Quantity"
             />
+            </label>
+            <label htmlFor="">
+            Serial Number:
             <input
               onChange={handleChange}
-              value={data.barcode}
+              value={data.serial_number}
               className="inputStyle2"
               type="text"
-              name="Barcode"
-              placeholder="Enter the Barcode"
+              name="serial_number"
+              placeholder="Enter Serial Number"
             />
+            </label>
+            <label htmlFor="">
+            Part Area:
             <input
               onChange={handleChange}
               value={data.partArea}
@@ -97,6 +117,9 @@ const AddPart = ({ handleChange, data }) => {
               name="partArea"
               placeholder="Enter Part Area"
             />
+            </label>
+            <label htmlFor="">
+            Additional Details:
             <textarea
               onChange={handleChange}
               value={data.additionalDetails}
@@ -104,40 +127,47 @@ const AddPart = ({ handleChange, data }) => {
               className="wik1"
               placeholder="Additional Details"
             />
-            <label>
-              Assigned Users:
-              <select
+            </label>
+            <label htmlFor="">
+            Assigned Users
+              <select 
                 onChange={handleChange}
+                multiple={true}
                 value={data.assignedUsers}
                 name="assignedUsers"
-                className="browser-default custom-select custom-select-md mb-3"
-              >
+                className="browser-default custom-select custom-select-md mb-3"              >
                 <option value="1">One</option>
                 <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
               </select>
             </label>
-            <label>
-              Assigned Teams:
-              <select
+            <label htmlFor="">
+            Assigned Teams
+              <select 
                 onChange={handleChange}
+                multiple={true}
                 value={data.assignedTeams}
                 name="assignedTeams"
-                className="browser-default custom-select custom-select-md mb-3"
-              >
+                className="browser-default custom-select custom-select-md mb-3"              >
                 <option value="1">One</option>
                 <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
               </select>
             </label>
-            <label>
-              Assigned Customers:
-              <select
+            <label htmlFor="">
+            Assigned Customers
+              <select 
                 onChange={handleChange}
+                multiple={true}
                 value={data.assignedCustomers}
                 name="assignedCustomers"
-                className="browser-default custom-select custom-select-md mb-3"
-              >
+                className="browser-default custom-select custom-select-md mb-3"              >
                 <option value="1">One</option>
                 <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
               </select>
             </label>
             <label>

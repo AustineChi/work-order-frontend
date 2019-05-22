@@ -6,13 +6,30 @@ class Parts extends Component {
   state = {
     data: {}
   };
+
   onChange = e => {
     let data = this.state.data;
-    data[[e.target.name]] = e.target.value;
+    if (e.target.multiple === true) {
+      let options = e.target.options;
+      let value = data[[e.target.name]] || [];
+      for (let i = 0, l = options.length; i < l; i++) {
+        if (options[i].selected && value.indexOf(options[i].value) === -1) {
+          value.push(options[i].value);
+        }
+        else if (options[i].selected && value.indexOf(options[i].value) !== -1){
+          let index = value.indexOf(options[i].value);
+          if (index !== -1) value.splice(index, 1);
+        }
+      }
+    data[[e.target.name]] = value         
+    }
+    else {
+      data[[e.target.name]] = e.target.value; 
+    }
     this.setState({
       data: data
     });
-    console.log(this.state.data);
+    console.log(this.state.data)
   };
 
   render() {

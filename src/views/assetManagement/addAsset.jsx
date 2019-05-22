@@ -26,6 +26,8 @@ const AddAsset = ({ handleChange, data }) => {
             </button>
           </div>
           <div className="modal-body">
+          <label htmlFor="">
+          Asset Name:
             <input
               onChange={handleChange}
               value={data.assetName}
@@ -34,6 +36,9 @@ const AddAsset = ({ handleChange, data }) => {
               type="text"
               placeholder="Asset Name"
             />
+            </label>
+            <label htmlFor="">
+            Description:
             <input
               onChange={handleChange}
               value={data.description}
@@ -42,6 +47,9 @@ const AddAsset = ({ handleChange, data }) => {
               type="text"
               placeholder="Description"
             />
+            </label>
+            <label htmlFor="">
+            Model:
             <input
               onChange={handleChange}
               value={data.model}
@@ -50,14 +58,18 @@ const AddAsset = ({ handleChange, data }) => {
               type="text"
               placeholder="Model"
             />
+            </label>
+            <label htmlFor="">
+            Serial Number:
             <input
               onChange={handleChange}
-              value={data.barcode}
-              name="barcode"
+              value={data.serial_number}
+              name="serial_number"
               className="inputStyle2"
               type="text"
-              placeholder="Barcode"
+              placeholder="Serial Number"
             />
+            </label>
             <label htmlFor="">
               Asset Category
               <select
@@ -70,15 +82,20 @@ const AddAsset = ({ handleChange, data }) => {
                 <option value="2">Two</option>
               </select>
             </label>
-
-            <input
-              onChange={handleChange}
-              value={data.location}
-              name="location"
-              className="inputStyle2"
-              type="text"
-              placeholder="Select Location"
-            />
+            <label htmlFor="">
+              Location
+              <select
+                onChange={handleChange}
+                value={data.location}
+                name="location"
+                className="browser-default custom-select custom-select-md mb-3"
+              >
+                <option value="abuja">abuja</option>
+                <option value="lagos">lagos</option>
+              </select>
+            </label>
+            <label htmlFor="">
+            Area:
             <input
               onChange={handleChange}
               value={data.area}
@@ -88,11 +105,12 @@ const AddAsset = ({ handleChange, data }) => {
               placeholder="Area
               "
             />
+            </label>
             <label htmlFor="">
               Select Parent Asset
               <select
                 onChange={handleChange}
-                value={data.assetCategory}
+                value={data.parentAsset}
                 name="parentAsset"
                 className="browser-default custom-select custom-select-md mb-3"
               >
@@ -114,27 +132,61 @@ const AddAsset = ({ handleChange, data }) => {
               </select>
             </label>
             <label htmlFor="">
-              <select className="browser-default custom-select custom-select-md mb-3">
-                <option selected>Assigned Users</option>
+            Assigned Users
+              <select 
+                onChange={handleChange}
+                multiple={true}
+                value={data.assignedUsers}
+                name="assignedUsers"
+                className="browser-default custom-select custom-select-md mb-3"              >
                 <option value="1">One</option>
                 <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
               </select>
             </label>
-            <select className="browser-default custom-select custom-select-md mb-3">
-              <option selected>Assigned Teams</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-            </select>
-            <select className="browser-default custom-select custom-select-md mb-3">
-              <option selected>Assigned Vendors</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-            </select>
-            <select className="browser-default custom-select custom-select-md mb-3">
-              <option selected>Assigned Customers</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-            </select>
+            <label htmlFor="">
+            Assigned Teams
+              <select 
+                onChange={handleChange}
+                multiple={true}
+                value={data.assignedTeams}
+                name="assignedTeams"
+                className="browser-default custom-select custom-select-md mb-3"              >
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
+              </select>
+            </label>
+            <label htmlFor="">
+            Assigned Vendors
+              <select 
+                onChange={handleChange}
+                multiple={true}
+                value={data.assignedVendors}
+                name="assignedVendors"
+                className="browser-default custom-select custom-select-md mb-3"              >
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
+              </select>
+            </label>
+            <label htmlFor="">
+            Assigned Customers
+              <select 
+                onChange={handleChange}
+                multiple={true}
+                value={data.assignedCustomers}
+                name="assignedCustomers"
+                className="browser-default custom-select custom-select-md mb-3"              >
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
+              </select>
+            </label>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-dark fullwidth">

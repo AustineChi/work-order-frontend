@@ -1,6 +1,6 @@
 import React from "react";
 
-const Create = ({ handleChange, data }) => {
+const Create = ({ handleChange, data, selectData }) => {
   return (
     <div
       className="modal fade"
@@ -29,22 +29,27 @@ const Create = ({ handleChange, data }) => {
             </button>
           </div>
           <div className="modal-body">
+          <label htmlFor="">
+          Title:
             <input
               onChange={handleChange}
-              value={data.value}
+              value={data.title}
               name="title"
               className="inputStyle2"
               type="text"
-              placeholder="Title:"
+              placeholder="Title"
             />
+            </label>
+            <label htmlFor="">
+            Description:
             <textarea
               onChange={handleChange}
               value={data.description}
               name="description"
               placeholder="Description"
             />
-            <span className="wik1">
-              <label className="wik1">Due Date / Scheduled On</label>
+            </label>
+              <label className="wik1">Due Date / Scheduled On:
               <input
                 onChange={handleChange}
                 value={data.dueDate}
@@ -53,8 +58,7 @@ const Create = ({ handleChange, data }) => {
                 id="date"
                 type="date"
               />
-            </span>
-
+</label>
             <label>
               Recurring Schedule:
               <select
@@ -63,18 +67,24 @@ const Create = ({ handleChange, data }) => {
                 name="recurringSchedule"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="1">One</option>
-                <option value="2">Two</option>
+              {selectData.map(option => (
+                            <option key={option._id} value={option.selectValue} >
+                                {option.selectValue}
+                            </option>
+                            ))}
               </select>
             </label>
+            <label htmlFor="">
+            Estimated Duration (hours):
             <input
               onChange={handleChange}
               value={data.estimatedDuration}
               name="estimatedDuration"
               className="inputStyle2"
               type="text"
-              placeholder="Estimated Duration (hours):"
+              placeholder="Enter Estimated Duration (hours):"
             />
+            </label>
             <label>
               Priority
               <br />
@@ -147,18 +157,6 @@ const Create = ({ handleChange, data }) => {
                 <option value="2">Two</option>
               </select>
             </label>
-            <label>
-              Recurring Schedule
-              <select
-                onChange={handleChange}
-                value={data.recurringSchedule}
-                name="recurringSchedule"
-                className="browser-default custom-select custom-select-md mb-3"
-              >
-                <option value="1">One</option>
-                <option value="2">Two</option>
-              </select>
-            </label>
             <label htmlFor="">
               Assigned To
               <select
@@ -169,30 +167,44 @@ const Create = ({ handleChange, data }) => {
               >
                 <option value="1">One</option>
                 <option value="2">Two</option>
+                
+
               </select>
             </label>
             <label htmlFor="">
-              Additional Workers
-              <select className="browser-default custom-select custom-select-md mb-3">
+              Additional Workers:
+              <select 
+                onChange={handleChange}
+                multiple={true}
+                value={data.additionalWorkers}
+                name="additionalWorkers"
+                className="browser-default custom-select custom-select-md mb-3"              >
                 <option value="1">One</option>
                 <option value="2">Two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
               </select>
             </label>
             <label htmlFor="">
-              Location
+              Location:
               <select
                 onChange={handleChange}
                 value={data.location}
                 name="location"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="1">One</option>
-                <option value="2">Two</option>
+                <option value="abuja">abuja</option>
+                <option value="lagos">lagos</option>
               </select>
             </label>
             <label htmlFor="">
-              Asset
-              <select className="browser-default custom-select custom-select-md mb-3">
+              Asset:
+              <select 
+              onChange={handleChange}
+              value={data.asset}
+              name="asset"
+              className="browser-default custom-select custom-select-md mb-3"
+              >
                 <option value="1">One</option>
                 <option value="2">Two</option>
               </select>
