@@ -100,10 +100,10 @@ const AddPart = ({ handleChange, data }) => {
             Serial Number:
             <input
               onChange={handleChange}
-              value={data.serial_number}
+              value={data.serialNumber}
               className="inputStyle2"
               type="text"
-              name="serial_number"
+              name="serialNumber"
               placeholder="Enter Serial Number"
             />
             </label>
@@ -174,7 +174,7 @@ const AddPart = ({ handleChange, data }) => {
               Select Location:
               <select
                 onChange={handleChange}
-                value={data.selectLocation}
+                value={data.location}
                 name="location"
                 className="browser-default custom-select custom-select-md mb-3"
               >

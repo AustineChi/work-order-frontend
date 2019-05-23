@@ -147,7 +147,7 @@ class Assets extends Component {
                 <th scope="col">Location</th>
                 <th scope="col">Area</th>
                 <th scope="col">Model</th>
-                <th scope="col">Barcode</th>
+                <th scope="col">Serial Num</th>
                 <th scope="col">Category</th>
                 <th scope="col">Description</th>
                 <th scope="col">Primary User</th>

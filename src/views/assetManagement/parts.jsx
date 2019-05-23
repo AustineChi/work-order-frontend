@@ -52,7 +52,7 @@ class Parts extends Component {
         id: 2,
         quantity: 35,
         cost: "$9.97",
-        barcode: "#0f3",
+        barcode: "#0f3767676",
         area: "7983 Mendota Alley",
         category: "Niagara Mohawk Holdings, Inc.",
         description:
@@ -126,12 +126,12 @@ class Parts extends Component {
                 <th scope="col">ID</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Cost</th>
-                <th scope="col">Barcode</th>
+                <th scope="col">Serial Num</th>
                 <th scope="col">Area</th>
                 <th scope="col">Category</th>
                 <th scope="col">Description</th>
                 <th scope="col">Location</th>
-                <th scope="col">Date Created</th>
+                <th scope="col">Created</th>
               </tr>
             </thead>
             <tbody>{renData}</tbody>

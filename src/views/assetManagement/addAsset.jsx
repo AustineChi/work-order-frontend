@@ -63,8 +63,8 @@ const AddAsset = ({ handleChange, data }) => {
             Serial Number:
             <input
               onChange={handleChange}
-              value={data.serial_number}
-              name="serial_number"
+              value={data.serialNumber}
+              name="serialNumber"
               className="inputStyle2"
               type="text"
               placeholder="Serial Number"
