@@ -10,6 +10,7 @@ import ChangeLog from "./views/assetManagement/changeLog";
 import Meters from "./views/assetManagement/meters";
 import WorkOrders from "./views/workOrders/index";
 import Locations from "./views/workOrders/locations";
+import Teams from "./views/workOrders/teams";
 import Assets from "./views/assetManagement/assets";
 import Parts from "./views/assetManagement/parts";
 // Add all icons to the library so you can use it in your page
@@ -25,6 +26,7 @@ function App() {
           <Route path="/change/log" component={ChangeLog} />
           <Route path="/login" component={Login} />
           <Route path="/work/orders" component={WorkOrders} />
+          <Route path="/teams" component={Teams} />
           <Route path="/locations" component={Locations} />
           <Route path="/assets" component={Assets} />
           <Route path="/parts" component={Parts} />

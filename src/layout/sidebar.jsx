@@ -54,6 +54,11 @@ Work Order Management
             </Link>
         </li>
         <li className="">
+        <Link className="" to="/teams">
+              Teams
+            </Link>
+        </li>
+        <li className="">
         <Link className="" to="/locations">
               Locations
             </Link>
