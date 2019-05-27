@@ -3,7 +3,6 @@ import { render } from "react-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/";
-import Footer from "./layout/footer";
 import Header from "./layout/header";
 import Login from "./views/loginPage/index";
 import ChangeLog from "./views/assetManagement/changeLog";
@@ -31,7 +30,6 @@ function App() {
           <Route path="/assets" component={Assets} />
           <Route path="/parts" component={Parts} />
         </main>
-        <Footer />
       </BrowserRouter>
     </div>
     </Provider>

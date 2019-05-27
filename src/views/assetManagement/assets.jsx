@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
-import AddAsset from "./addAsset";
-
+import AddAsset from "./assetsChildrenComponents/addAsset";
+import AssetTabs from "./assetsChildrenComponents/assetTabs"
 class Assets extends Component {
   state = {
     data: {}
   };
+
+  fetchOneData = e => {
+    console.log("fetch one data")
+  }
 
   onChange = e => {
     let data = this.state.data;
@@ -105,7 +109,11 @@ class Assets extends Component {
     ];
     const renData = data.map(data => {
       return (
-        <tr>
+        <tr
+        onClick={this.fetchOneData}
+        data-toggle="modal"
+        data-target="#tabsModal" 
+        >
           <td height="30px">{data.name}</td>
           <td>{data.id}</td>
           <td>{data.location}</td>
@@ -127,6 +135,8 @@ class Assets extends Component {
       <div className="container side-container">
         <Sidebar />
         <AddAsset handleChange={this.onChange} data={this.state.data} />
+        <AssetTabs handleChange={this.onChange} data={this.state.data} testing={this.state.testing} />
+
         <div className="breadcrumb">
           Assets
           <button

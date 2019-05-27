@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Footer from "../../layout/footer";
 
 class Login extends Component {
     state = {  }
@@ -13,6 +14,7 @@ class Login extends Component {
             Password (<a href="/user/forgot" tabindex="5">Forgot password?</a>)
             </label>
             </div>
+            <Footer />
         </div> 
         );
     }

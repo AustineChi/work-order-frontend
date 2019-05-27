@@ -5,7 +5,7 @@ const AddPart = ({ handleChange, data }) => {
     <div
       className="modal fade"
       id="partModal"
-      tabindex="-1"
+      tabindex="1"
       role="dialog"
       aria-labelledby="partModalLabel"
       aria-hidden="true"
@@ -92,7 +92,7 @@ const AddPart = ({ handleChange, data }) => {
               value={data.minimumPartQuantity}
               className="inputStyle2"
               type="text"
-              name=""
+              name="minimumPartQuantity"
               placeholder="Enter the Minimum Part Quantity"
             />
             </label>

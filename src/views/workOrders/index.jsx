@@ -39,8 +39,9 @@ class Index extends Component {
     this.setState({
       data: data
     });
+    console.log(this.state.data)
   };
-  
+
   render() {
     const data = [
       {

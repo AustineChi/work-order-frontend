@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
-import AddPart from "./addPart";
-
+import AddPart from "./partsChildrenComponents/addPart";
+import PartTabs from "./partsChildrenComponents/partTabs"
 class Parts extends Component {
   state = {
-    data: {}
+    data: {},
+    testing: "carl"
   };
+
+  fetchOneData = e => {
+    console.log("fetch one data")
+  }
 
   onChange = e => {
     let data = this.state.data;
@@ -89,7 +94,11 @@ class Parts extends Component {
     ];
     const renData = data.map(data => {
       return (
-        <tr>
+        <tr 
+        onClick={this.fetchOneData}
+        data-toggle="modal"
+        data-target="#tabsModal"   
+        >
           <td>{data.name}</td>
           <td>{data.id}</td>
           <td>{data.quantity}</td>
@@ -107,6 +116,8 @@ class Parts extends Component {
       <div className="container side-container">
         <Sidebar />
         <AddPart handleChange={this.onChange} data={this.state.data} />
+        <PartTabs handleChange={this.onChange} data={this.state.data} testing={this.state.testing} />
+
         <div className="breadcrumb">
           Parts
           <button

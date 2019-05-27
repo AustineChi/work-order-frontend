@@ -44,7 +44,7 @@ html {
     left: 2%;
   }
   .App-logo2 {
-    height: 45px;
+    height: 38px;
     pointer-events: none;
     margin: 10px 2%;
     position: fixed;
@@ -230,6 +230,9 @@ transition: all 1s;
     overflow: auto;
     position: relative;
     z-index: 2;
+    ul {
+      float: right
+    }
     ul li a {
       text-decoration: none;
       display: block;
@@ -275,12 +278,14 @@ transition: all 1s;
 
   ul {
     text-align: center;
-    float: right;
   }
   
   ul li {
     display: inline-block;
   }
+
+ 
+
   table td {
     white-space: nowrap;
     overflow: hidden;
@@ -310,11 +315,10 @@ transition: all 1s;
 #sidebar {
   z-index: 1000;
   position: fixed;
-  left: 245px;
-  width: 240px;
-  height: 60vh;
-  margin-left: -240px;
-  margin-bottom: -60px;
+  left: 269px;
+  width: 270px;
+  height: 100%;
+  margin-left: -270px;
   background: #f8f9fa;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -338,7 +342,9 @@ transition: all 1s;
 .fs13 {
   font-size: 13px
 }
-
+.mb2 {
+margin-bottom: 20px
+}
 
 textarea {
 	display: block;
@@ -381,6 +387,14 @@ textarea:focus{
 }
 .fr {
   float: right;
+  span {
+    padding: 3px;
+    color: #d8d3d3;
+  }
+  span:hover {
+    color: rgb(150, 150, 150);
+    cursor: pointer;
+}
 }
 .wik1 {
 margin: 10px 0
@@ -396,4 +410,30 @@ table {
 }
 label {
   width: 100%
+}
+.modal-lg {
+  max-width: 80% !important;
+}
+.paper {
+  min-height: 400px;
+  min-width: 90%;
+  margin: 0 auto;
+  padding: 20px 3%;
+}
+.label-style {
+  color:  rgb(150, 150, 150);
+  p{
+    font-size: 15px;
+    color: #777
+  }
+}
+#tabsModal {
+  z-index: 1900;
+
+}
+#partModal, #assetModal {
+  z-index: 2000;
+}
+.card-body span {
+  margin: 0 10px
 }
