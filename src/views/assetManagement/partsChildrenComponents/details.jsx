@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Details = ({testing}) => {
+const Details = ({partDetails}) => {
     return (  
         <div>
         <h5>Parts Details</h5>
@@ -8,29 +8,29 @@ const Details = ({testing}) => {
                <div className="col-sm-6">
                <label className="label-style">
                Part Name:
-               <p>hello</p>
+               <p>{partDetails.partName}</p>
                </label>
                <label className="label-style">
                Part Description:
-               <p>hello</p>
+               <p>{partDetails.partDescription}</p>
                </label>
                <label className="label-style">
                Quantity:
-               <p>hello</p>
+               <p>{partDetails.quantity}</p>
                </label>
                </div>
                <div className="col-sm-6">
                <label className="label-style">
                ID:
-               <p>hello</p>
+               <p>{partDetails._id}</p>
                </label>
                <label className="label-style">
               Unit Cost:
-               <p>hello</p>
+               <p>{partDetails.unitCost}</p>
                </label>
                <label className="label-style">
                Minimum Quantity:
-               <p>hello</p>
+               <p>{partDetails.minimumPartQuantity}</p>
                </label>
                </div>
             </div> 
@@ -39,13 +39,13 @@ const Details = ({testing}) => {
                <div className="col-sm-6">
                <label className="label-style">
                Area:
-               <p>hello</p>
+               <p>{partDetails.partArea}</p>
                </label>
                </div>
                <div className="col-sm-6">
                <label className="label-style">
                Assigned Location:
-               <p>hello</p>
+               <p>{partDetails.location}</p>
                </label>
                </div>
             </div> 

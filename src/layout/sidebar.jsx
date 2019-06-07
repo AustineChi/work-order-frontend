@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import logo2 from '../images/Rensource.gif'
 
 const Sidebar = () => {
     return ( 
         <div id="sidebar">
+        <div>
+        <img src={logo2} className="App-logo3" alt="logo" />
+        </div>
+
         <div className="list-group list-group-flush">
             <span
             to="/assets"

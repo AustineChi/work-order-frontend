@@ -1,34 +1,18 @@
 import React from "react";
+import { Modal } from 'react-bootstrap';
 
-const AddLocation = ({ handleChange, data }) => {
+const AddLocation = ({ handleChange, handleClick, data, response, showModal, handleClose }) => {
+
   return (
-    <div
-      className="modal fade"
-      id="locationModal"
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="locationModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5
-              className="modal-title center-align-text "
-              id="locationModalLabel"
-            >
-              Add Location
-            </h5>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
+
+<Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Location</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <span style={{ color: "red", fontSize: "13px" }}>
+              {response.message}
+            </span>
             <input
               onChange={handleChange}
               value={data.name}
@@ -45,15 +29,18 @@ const AddLocation = ({ handleChange, data }) => {
               name="address"
               placeholder="Address:"
             />
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-dark fullwidth">
+
+          </Modal.Body>
+          <Modal.Footer>
+          <button
+              type="button"
+              className="btn btn-dark fullwidth"
+              onClick={handleClick}
+            >
               Submit
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </button>          
+            </Modal.Footer>
+        </Modal>
   );
 };
 

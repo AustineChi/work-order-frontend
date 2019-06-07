@@ -50,6 +50,12 @@ html {
     position: fixed;
     top: 10px;
   }
+  .App-logo3 {
+    height: 38px;
+    pointer-events: none;
+    margin: 30px 20px;
+    top: 10px;
+}
   .App-link {
     color: #61dafb;
   }
@@ -198,8 +204,13 @@ transition: all 1s;
 
 .btn-white {
    background-color: $color-white;
-   color: $color-gray-dark
-}
+   color: $color-gray-dark;
+   position: absolute;
+   bottom: 7px;
+   left: 4px;
+ }
+
+
 .btn:hover {
    transform: translateY(-3px);
    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -212,7 +223,12 @@ transition: all 1s;
 
 }
 
-  
+.btn-white:hover {
+  color: #333
+}  
+.btn:focus, .btn.focus {
+  box-shadow: none
+}
   @keyframes App-logo-spin {
     from {
       transform: rotate(0deg);
@@ -273,7 +289,7 @@ transition: all 1s;
   }
   
   .nav-list > li > a:hover {
-    background-color: #444444;
+    background-color: #073553;
   }
 
   ul {
@@ -317,8 +333,8 @@ transition: all 1s;
   position: fixed;
   left: 269px;
   width: 270px;
-  height: 100%;
-  margin-left: -270px;
+  height: 100vh;
+  top: -0.4vh;  margin-left: -270px;
   background: #f8f9fa;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -327,10 +343,19 @@ transition: all 1s;
   border: 1px solid #dee2e6!important
 }
 
-.breadcrumb .btn {
+.breadcrumb {
+  background-color: #073553;
+  color: #C4C4C4;
+  font-weight: 700;
+  position: relative;
+  .btn {
   position: absolute;
-  right: 20px;
-  margin-top: -7px;
+  right: 7px;
+  position: absolute;
+  bottom: 7px;
+  background-color: #fcd32d;
+  color: black;
+}
 }
 .pull-right {
   float: right!important;
@@ -432,8 +457,83 @@ label {
 
 }
 #partModal, #assetModal {
-  z-index: 2000;
+  z-index: 4000;
 }
 .card-body span {
   margin: 0 10px
+}
+.table th, .table td {
+  font-size: 14px;
+}
+
+.notif {
+  position:fixed;
+   width: 300px;
+   height: 70px;
+   background-color:blue;
+    right: 2%;
+     bottom: 10vh;
+     &.not-visible {
+       display: none
+     }
+     &.success {
+      background-color: #16a085;
+      
+      & p { color: #333; }
+    } 
+    &.danger {
+      background-color: #c0392b;
+      
+      & p { color: #fff; }
+    }
+    
+    &.warning {
+      background-color: #F38211;
+      
+      & p { color: #fff; }
+    }
+    
+    & figure {
+      height: 35px;
+      margin: 0 15px 0 0;
+      opacity: .9;
+      width: 35px;
+      
+      & img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    
+    & p {
+      color: #fff;
+      font-family: 'Noto Sans';
+      font-size: 14px;
+      white-space: nowrap;
+    }
+}
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff6e5;
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  z-index: 1040;
+}
+
+#modal-lg {
+  max-width: 80% !important;
+  .modal-content {
+    min-height: 80vh
+  }
 }

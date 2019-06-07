@@ -1,35 +1,19 @@
 import React from "react";
+import { Modal } from 'react-bootstrap';
 
-const AddTeam = ({ handleChange, data }) => {
+const AddTeam = ({ handleChange, handleClick, data, response,  users, showModal, handleClose }) => {
+  const _users = users.length ? (users.map((user) =>
+  <option key={user._id} value={user.name}>{user.name}</option>
+)):  (
+"")
     return (
-      <div
-        className="modal fade"
-        id="teamModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="teamModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5
-                className="modal-title center-align-text "
-                id="teamModalLabel"
-              >
-                Create Team
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-            <label htmlFor="">
+
+<Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>  Create Team</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <label htmlFor="">
           Team Name:
               <input
                 onChange={handleChange}
@@ -49,21 +33,23 @@ const AddTeam = ({ handleChange, data }) => {
                 value={data.teamMembers}
                 name="teamMembers"
                 className="browser-default custom-select custom-select-md mb-3"              >
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">three</option>
-                <option value="4">four</option>
+                 {_users}
               </select>
             </label>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-dark fullwidth">
+            <span style={{ color: "red", fontSize: "13px" }}>
+              {response.message}
+            </span>
+          </Modal.Body>
+          <Modal.Footer>
+          <button 
+              onClick={handleClick}
+              type="button" 
+              className="btn btn-dark fullwidth"
+              >
                 Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+              </button>         
+            </Modal.Footer>
+        </Modal>
     );
   };
   

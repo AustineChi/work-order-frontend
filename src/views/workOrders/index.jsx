@@ -1,21 +1,58 @@
 import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
 import CreateWorkOrder from "./createWorkOrder";
+import WorkOrderTabs from "./workOrderTabs";
+import { connect } from "react-redux";
+import {_getAssets} from "../../actions/assetActions";
+import { _getUsers } from "../../actions/userActions";
+import { _addWorkOrder, _getWorkOrders, _workOrderDetails } from "../../actions/workOrderActions";
+import { _getLocations } from "../../actions/locationActions";
+
+import Toast from "../../utility/toast";
 
 class Index extends Component {
   state = {
     data: {},
+    showModal: false,
+    TabsModal: false,
+    modalOpacity: 1,
+    toast: {
+      visible: false,
+      level: "success",
+      message: null
+    },
     select: [{
       "_id": 1,
-      "selectValue": "Cadillac"
+      "selectValue": "select One"
     }, {
       "_id": 2,
-      "selectValue": "Maserati"
+      "selectValue": "Select Two"
     }, {
       "_id": 3,
-      "selectValue": "Dodge"
+      "selectValue": "Select Three"
     }]
   };
+
+  handleClose = () => {
+    this.setState({ showModal: false, modalOpacity: 1 });
+  }
+
+  handleShow = () => {
+    this.setState({ showModal: true, modalOpacity: 0.5 });
+  }
+  closeTabModal = () => {
+    this.setState({ TabsModal: false });
+  }
+
+  fetchOneData = (id) => {
+    this.props.details(id)
+    this.setState({ TabsModal: true });
+
+  }
+
+  handleUpdate = () => {
+    console.log("update function")
+  }
 
   onChange = e => {
     let data = this.state.data;
@@ -42,85 +79,86 @@ class Index extends Component {
     console.log(this.state.data)
   };
 
-  render() {
-    const data = [
+
+  showToast = data => {
+    this.setState(
       {
-        due: "05.07.2018",
-        id: "Jenn",
-        title: "Witherop",
-        priority: "medium",
-        assignee: "Jenn Witherop",
-        location: "Kentucky",
-        last_updated: "11.06.2018",
-        created: "21.03.2019"
+        toast: {
+          ...this.state.toast,
+          visible: data.success ? true : false,
+          message: data.message,
+          level: data.success === true ? "success" : "danger"
+        }
       },
-      {
-        due: "09.12.2018",
-        id: "Kristofer",
-        title: "Silverthorn",
-        priority: "high",
-        assignee: "Kristofer Silverthorn",
-        location: "California",
-        last_updated: "05.11.2018",
-        created: "01.05.2019"
-      },
-      {
-        due: "10.03.2019",
-        id: "Bobbe",
-        title: "Mussettini",
-        priority: "medium",
-        assignee: "Bobbe Mussettini",
-        location: "Indiana",
-        last_updated: "27.11.2018",
-        created: "17.04.2019"
-      },
-      {
-        due: "15.02.2019",
-        id: "Terese",
-        title: "Gansbuhler",
-        priority: "high",
-        assignee: "Terese Gansbuhler",
-        location: "California",
-        last_updated: "10.05.2018",
-        created: "22.08.2018"
+      () => {
+        setTimeout(
+        () => 
+         this.setState({ toast: { ...this.state.toast, visible: false } }),
+              3000 
+        );
       }
-    ];
-    const renData = data.map(data => {
-      return (
-        <tr>
+    );
+  };
+
+  handleClick = () => {
+    this.props.addNewWorkOrder(this.state.data);
+  };
+
+  componentDidMount() {
+    this.props.getAssets();
+    this.props.getUsers();
+    this.props.getWorkOrders();
+    this.props.getLocations();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.response.data) {
+      if (this.props.workOrdersData.indexOf(nextProps.response.data) === -1) this.props.workOrdersData.unshift(nextProps.response.data);
+    }
+    if (nextProps.response.success === true) {
+      this.setState({ showModal: false, data: {}, modalOpacity: 1 });
+      setTimeout(() => this.showToast(nextProps.response), 2000);
+    }
+  }
+
+  render() {
+    console.log("work", this.props)
+    let id = 1;
+    const renData = this.props.workOrdersData.length ? (this.props.workOrdersData
+      .map(data => {
+        return (
+          <tr
+          onClick={() => this.fetchOneData(data._id)}
+          data-toggle="modal"
+          data-target="#tabsModal" 
+          >
           <td>
             <input type="checkbox" name="vehicle2" value="Car" />
           </td>
-          <td>{data.due}</td>
-          <td>{data.id}</td>
           <td>{data.title}</td>
+          <td>{data.dueDate}</td>
+          <td>Open</td>
           <td>{data.priority}</td>
-          <td>{data.assignee}</td>
+          <td>{data.assignedTo}</td>
           <td>{data.location}</td>
-          <td>{data.last_updated}</td>
+          <td>{data.updated}</td>
           <td>{data.created}</td>
-          <td>
-            <i className="fas fa-pen" />
-            <i className="fas fa-ellipsis-v" />
-          </td>
-        </tr>
-      );
-    });
+          </tr>
+        );
+      })
+      ) : (
+        <div>No Work Orders yet!</div>
+      )
 
     return (
       <div className="container side-container">
         <Sidebar />
-        <CreateWorkOrder 
-        handleChange={this.onChange} 
-        data={this.state.data}
-        selectData={this.state.select} />
         <div className="breadcrumb">
           Work Orders
           <button
             type="button"
             className="btn btn-add float-right fs13"
-            data-toggle="modal"
-            data-target="#createWorkOrders"
+            onClick={this.handleShow}
           >
             <i className="fas fa-plus p5" />Create Work Order
           </button>
@@ -131,9 +169,9 @@ class Index extends Component {
               <th>
                 <input type="checkbox" name="vehicle2" value="Car" />
               </th>
-              <th scope="col">Due</th>
-              <th scope="col">WO #</th>
               <th scope="col">WO Title</th>
+              <th scope="col">Due</th>
+              <th scope="col">Status</th>
               <th scope="col">Priority</th>
               <th scope="col">Assignee(s)</th>
               <th scope="col">Location</th>
@@ -143,9 +181,71 @@ class Index extends Component {
           </thead>
           <tbody>{renData}</tbody>
         </table>
+        <CreateWorkOrder 
+        handleChange={this.onChange} 
+        handleClick={this.handleClick}
+        data={this.state.data}
+        response={this.props.response}
+        users={this.props.users}
+        assets={this.props.assets}
+        locations={this.props.locations}
+        selectData={this.state.select} 
+        showModal={this.state.showModal}
+        handleClose={this.handleClose}
+        />
+        <WorkOrderTabs 
+        handleUpdate={this.handleUpdate} 
+        response={this.props.response}
+         workOrderDetails={this.props.workOrderDetails}
+         handleShow={this.handleShow}
+         closeTabModal={this.closeTabModal}
+         TabsModal={this.state.TabsModal}
+         modalOpacity={this.state.modalOpacity}
+        />
+        <Toast
+          level={this.state.toast.level}
+          message={this.state.toast.message}
+          visible={this.state.toast.visible}
+        />
       </div>
     );
   }
 }
 
-export default Index;
+const mapStateToProps = state => ({
+  users: state._users.users,
+  workOrdersData: state._workOrders.workOrders,
+  workOrderDetails: state._workOrders.workOrderDetails,
+  response: state._workOrders.response,
+  assets: state._assets.assets,
+  locations: state._locations.locations
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewWorkOrder: data => {
+      dispatch(_addWorkOrder(data));
+    },
+    getAssets: () => {
+      dispatch(_getAssets());
+    },
+    details: (id) => {
+      dispatch(_workOrderDetails(id));
+    },
+    getUsers: () => {
+      dispatch(_getUsers());
+    }, 
+    getWorkOrders: () => {
+      dispatch(_getWorkOrders());
+    },
+    getLocations: () => {
+      dispatch(_getLocations());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Index);
+

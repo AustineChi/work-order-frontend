@@ -1,70 +1,34 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { _getMeters } from "../../actions/meterActions" ;
 import Sidebar from "../../layout/sidebar";
 import AddMeter from "./addMeter";
-class Index extends Component {
-  render() {
-    const data = [
-      {
-        id: 1,
-        date: "2/30/2019",
-        meterID: "64-3367281",
-        color: "Mauv",
-        category: "inventory",
-        brand: "spark"
-      },
-      {
-        id: 2,
-        date: "2/30/2019",
-        meterID: "28-9498253",
-        color: "Fuscia",
-        category: "inventory",
-        brand: "spark"
-      },
-      {
-        id: 3,
-        date: "2/30/2019",
-        meterID: "47-9292841",
-        color: "Puce",
-        category: "inventory",
-        brand: "spark"
-      },
-      {
-        id: 4,
-        date: "2/30/2019",
-        meterID: "35-0486180",
-        color: "Crimson",
-        category: "inventory",
-        brand: "spark"
-      },
-      {
-        id: 5,
-        date: "2/30/2019",
-        meterID: "52-8495642",
-        color: "Puce",
-        category: "deployed",
-        brand: "spark"
-      }
-    ];
 
-    const renData = data.map(data => {
+class Index extends Component {
+
+  componentDidMount() {
+    this.props.getMeters();
+  }
+
+  render() {
+
+    const renData = this.props.meterData.results ? (this.props.meterData.results.map(data => {
       return (
         <tr>
           <td>
             <input type="checkbox" name="vehicle2" value="Car" />
           </td>
-          <td>{data.date}</td>
-          <td>{data.meterID}</td>
-          <td>{data.color}</td>
-          <td>{data.category}</td>
-          <td>{data.brand}</td>
-          <td>
-            <i className="far fa-eye" />
-            <i className="fas fa-pen" />
-            <i className="fas fa-trash-alt" />
-          </td>
+          <td>{data.createdDate}</td>
+          <td>{data.identifier}</td>
+          <td>{data.colorCode}</td>
+          <td>{data.brandCode}</td>
+          <td>{data.brandName}</td>
         </tr>
-      );
-    });
+      )
+    }) ) : (
+      <div>No Meters yet!</div>
+    );
+
     return (
       <div className="container side-container">
         <Sidebar />
@@ -89,9 +53,8 @@ class Index extends Component {
               <th scope="col">Date</th>
               <th scope="col">meterID</th>
               <th scope="col">color</th>
-              <th scope="col">category</th>
+              <th scope="col">brand Code</th>
               <th scope="col">brand</th>
-              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>{renData}</tbody>
@@ -101,4 +64,19 @@ class Index extends Component {
   }
 }
 
-export default Index;
+const mapStateToProps = state => ({
+  meterData: state._meters.metersDetials
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getMeters: () => {
+      dispatch(_getMeters());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Index);

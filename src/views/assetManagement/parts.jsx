@@ -1,16 +1,71 @@
 import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
 import AddPart from "./partsChildrenComponents/addPart";
-import PartTabs from "./partsChildrenComponents/partTabs"
+import PartTabs from "./partsChildrenComponents/partTabs";
+import { connect } from "react-redux";
+import { _addPart, _getParts, _PartDetails} from "../../actions/partActions";
+import { _getUsers } from "../../actions/userActions";
+import { _getTeams } from "../../actions/teamActions";
+import { _getLocations } from "../../actions/locationActions";
+import Toast from "../../utility/toast";
+
 class Parts extends Component {
   state = {
     data: {},
+    showModal: false,
+    TabsModal: false,
+    modalOpacity: 1,
+    toast: {
+      visible: false,
+      level: "success",
+      message: null
+    },
     testing: "carl"
   };
 
-  fetchOneData = e => {
-    console.log("fetch one data")
+  handleClose = () => {
+    this.setState({ showModal: false, modalOpacity: 1 });
   }
+
+  handleShow = () => {
+    this.setState({ showModal: true, modalOpacity: 0.5 });
+  }
+
+  closeTabModal = () => {
+    this.setState({ TabsModal: false });
+  }
+
+  fetchOneData = (id) => {
+    this.props.details(id);
+    this.setState({ TabsModal: true });
+  }
+
+  tableData =(prop) =>{
+    let id = 1;
+   const renData = prop.partsData.length ? (prop.partsData
+    .map(data => {
+      return (
+        <tr 
+        onClick={() => this.fetchOneData(data._id)}
+        >
+          <td>{data.partName}</td>
+          <td>{id++}</td>
+          <td>{data.quantity}</td>
+          <td>{data.unitCost}</td>
+          <td>{data.serialNumber}</td>
+          <td>{data.partArea}</td>
+          <td>{data.partCategory}</td>
+          <td>{data.partDescription}</td>
+          <td>{data.location}</td>
+          <td>{data._id}</td>
+        </tr>
+      );
+    })
+    ) : (
+      <div>No Inventory yet!</div>
+    )
+    return renData
+    }
 
   onChange = e => {
     let data = this.state.data;
@@ -37,94 +92,59 @@ class Parts extends Component {
     console.log(this.state.data)
   };
 
-  render() {
-    const data = [
+  showToast = data => {
+    this.setState(
       {
-        name: "Korella Gilffilland",
-        id: 1,
-        quantity: 79,
-        cost: "$8.41",
-        barcode: "#446",
-        area: "57461 Warner Way",
-        category: "Alexander & Baldwin Holdings, Inc.",
-        description:
-          "et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat",
-        location: "Michigan",
-        date_created: "2018-06-29"
+        toast: {
+          ...this.state.toast,
+          visible: data.success ? true : false,
+          message: data.message,
+          level: data.success === true ? "success" : "danger"
+        }
       },
-      {
-        name: "Tawsha Tollmache",
-        id: 2,
-        quantity: 35,
-        cost: "$9.97",
-        barcode: "#0f3767676",
-        area: "7983 Mendota Alley",
-        category: "Niagara Mohawk Holdings, Inc.",
-        description:
-          "et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id",
-        location: "Alabama",
-        date_created: "2019-03-14"
-      },
-      {
-        name: "Melonie Alliband",
-        id: 3,
-        quantity: 84,
-        cost: "$2.77",
-        barcode: "#0ee",
-        area: "93 Sutherland Terrace",
-        category: "Gores Holdings II, Inc.",
-        description:
-          "quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam",
-        location: "Kansas",
-        date_created: "2019-03-19"
-      },
-      {
-        name: "Simone Dellenbrok",
-        id: 4,
-        quantity: 51,
-        cost: "$4.25",
-        barcode: "#a54",
-        area: "3 Jackson Hill",
-        category: "Active Alts Contrarian ETF",
-        description:
-          "elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus",
-        location: "Iowa",
-        date_created: "2019-04-20"
+      () => {
+        setTimeout(
+          () =>
+            this.setState({ toast: { ...this.state.toast, visible: false } }),
+          3000
+        );
       }
-    ];
-    const renData = data.map(data => {
-      return (
-        <tr 
-        onClick={this.fetchOneData}
-        data-toggle="modal"
-        data-target="#tabsModal"   
-        >
-          <td>{data.name}</td>
-          <td>{data.id}</td>
-          <td>{data.quantity}</td>
-          <td>{data.cost}</td>
-          <td>{data.barcode}</td>
-          <td>{data.area}</td>
-          <td>{data.category}</td>
-          <td>{data.description}</td>
-          <td>{data.location}</td>
-          <td>{data.date_created}</td>
-        </tr>
-      );
-    });
+    );
+  };
+
+  handleClick = () => {
+    this.props.addPart(this.state.data);
+  };
+
+  componentDidMount() {
+    this.props.getParts();
+    this.props.getUsers();
+    this.props.getTeams();
+    this.props.getLocations();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.response.data) {
+      if (this.props.partsData.indexOf(nextProps.response.data) === -1) this.props.partsData.unshift(nextProps.response.data);
+    }
+    if (nextProps.response.success === true) {
+      this.setState({ showModal: false, data: {}, modalOpacity: 1 });
+      setTimeout(() => this.showToast(nextProps.response), 2000);
+    }
+  }
+
+  
+  render() {
+    console.log("my", this.props)    
     return (
       <div className="container side-container">
         <Sidebar />
-        <AddPart handleChange={this.onChange} data={this.state.data} />
-        <PartTabs handleChange={this.onChange} data={this.state.data} testing={this.state.testing} />
-
-        <div className="breadcrumb">
+      <div className="breadcrumb">
           Parts
           <button
             type="button"
             className="btn btn-add float-right fs13 "
-            data-toggle="modal"
-            data-target="#partModal"
+            onClick={this.handleShow}
           >
             <i className="fas fa-plus p5" />Add Part
           </button>
@@ -145,12 +165,72 @@ class Parts extends Component {
                 <th scope="col">Created</th>
               </tr>
             </thead>
-            <tbody>{renData}</tbody>
+            <tbody>{this.tableData(this.props)}</tbody>
           </table>
         </div>
+        <AddPart 
+        handleChange={this.onChange} 
+        handleClick={this.handleClick}
+        data={this.state.data}
+        response={this.props.response}
+        users={this.props.users}
+        teams={this.props.teams} 
+        locations={this.props.locations}  
+        showModal={this.state.showModal}
+        handleClose={this.handleClose}             
+         />
+        <PartTabs 
+       handleShow={this.handleShow}
+       closeTabModal={this.closeTabModal}
+       TabsModal={this.state.TabsModal}
+       modalOpacity={this.state.modalOpacity}
+       partDetails={this.props.partDetails}               
+        testing={this.state.testing}
+         />
+         <Toast
+          level={this.state.toast.level}
+          message={this.state.toast.message}
+          visible={this.state.toast.visible}
+        />
       </div>
     );
   }
 }
 
-export default Parts;
+const mapStateToProps = state => ({
+  users: state._users.users,
+  teams: state._teams.teams,
+  partsData: state._parts.parts,
+  partDetails: state._parts.partDetails,
+  response: state._parts.response,
+  locations: state._locations.locations
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addPart: data => {
+      dispatch(_addPart(data));
+    },
+    getParts: () => {
+      dispatch(_getParts());
+    },
+    details: (id) => {
+      dispatch(_PartDetails(id));
+    },
+    getUsers: () => {
+      dispatch(_getUsers());
+    }, 
+    getTeams: () => {
+      dispatch(_getTeams());
+    }
+    , 
+    getLocations: () => {
+      dispatch(_getLocations());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Parts);

@@ -1,14 +1,59 @@
 import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
 import AddAsset from "./assetsChildrenComponents/addAsset";
-import AssetTabs from "./assetsChildrenComponents/assetTabs"
+import AssetTabs from "./assetsChildrenComponents/assetTabs";
+import AllPart from "../../utility/allParts";
+import { connect } from "react-redux";
+import {_addAsset, _getAssets, _assetDetails, _filterAssets} from "../../actions/assetActions";
+import { _getParts } from "../../actions/partActions";
+import { _filterWorkOrders} from "../../actions/workOrderActions";
+import { _getUsers } from "../../actions/userActions";
+import { _getTeams } from "../../actions/teamActions";
+import { _getLocations } from "../../actions/locationActions";
+import Toast from "../../utility/toast";
+
 class Assets extends Component {
   state = {
-    data: {}
+    data: {},
+    showModal: false,
+    addPartsModal: false,
+    TabsModal: false,
+    modalOpacity: 1,
+    toast: {
+      visible: false,
+      level: "success",
+      message: null
+    }
   };
 
-  fetchOneData = e => {
-    console.log("fetch one data")
+  handleClose = () => {
+    this.setState({ showModal: false, modalOpacity: 1 });
+  }
+
+  handleShow = () => {
+    this.setState({ showModal: true, modalOpacity: 0.5 });
+  }
+
+  showAddPartsModal = () => {
+    // this.props.getParts();
+    // this.setState({ addPartsModal: true, modalOpacity: 0.5 });
+  alert("hello")
+  }
+
+  closeAddPartsModal = () => {
+    this.setState({ addPartsModal: false, modalOpacity: 1 });
+  }
+  closeTabModal = () => {
+    this.setState({ TabsModal: false });
+  }
+  fetchOneData = (id) => {
+    this.props.details(id)
+    this.setState({ TabsModal: true, modalOpacity: 1 });
+  }
+
+  fetchFilteredAssets = (id, assetName) => {
+    if(id.key == "assets") this.props.getFilteredAssets( {parentAsset: assetName});
+    if(id.key == "workorders") this.props.getFilteredWorkOrders({asset: assetName});
   }
 
   onChange = e => {
@@ -33,117 +78,90 @@ class Assets extends Component {
     this.setState({
       data: data
     });
-    console.log(this.state.data)
   };
-  
-  render() {
-    const data = [
+
+  showToast = data => {
+    this.setState(
       {
-        name: "Godzilla and Mothra: The Battle for Earth (Gojira vs. Mosura)",
-        id: "755-41-6681",
-        location: "Stockton",
-        area: "California",
-        model: "52664-007",
-        barcode: "88-3525031",
-        category: "Action|Sci-Fi",
-        description: "Aenean fermentum. Donec ut mauris eget massa tempor",
-        primary_user: "Lucille Catcheside",
-        assigned_users: "April Karpman",
-        assigned_teams: "Brainbox",
-        assigned_vendors: "karl oo",
-        parent_asset:
-          "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
-        date_created: "02.02.2019"
+        toast: {
+          ...this.state.toast,
+          visible: data.success ? true : false,
+          message: data.message,
+          level: data.success === true ? "success" : "danger"
+        }
       },
-      {
-        name: "Gate II: Trespassers, The",
-        id: "432-85-5291",
-        location: "Schenectady",
-        area: "New York",
-        model: "0378-0215",
-        barcode: "94-7331274",
-        category: "Horror",
-        description: "‪‪Aenean fermentum. Donec ut mauris eget massa tempor",
-        primary_user: "Giffy Bye",
-        assigned_users: "Ker Lago",
-        assigned_teams: "Vipe",
-        assigned_vendors: "hyehl oo",
-        parent_asset:
-          "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.",
-        date_created: "01.06.2018"
-      },
-      {
-        name: "Shrink",
-        id: "722-82-3143",
-        location: "New Orleans",
-        area: "Louisiana",
-        model: "57237-053",
-        barcode: "07-3637055",
-        category: "Drama",
-        description: "Aenean fermentum. Donec ut mauris eget massa tempor",
-        primary_user: "Bartlet Ray",
-        assigned_users: "Ofilia Addenbrooke",
-        assigned_teams: "Tambee",
-        assigned_vendors: "lioiil oo",
-        parent_asset:
-          "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
-        date_created: "03.07.2018"
-      },
-      {
-        name: "The White Sister",
-        id: "391-02-1019",
-        location: "Wichita Falls",
-        area: "Texas",
-        model: "50730-1410",
-        barcode: "14-2342493",
-        category: "Drama|Romance",
-        description: "Aenean fermentum. Donec ut mauris eget massa tempor",
-        primary_user: "Annora Rapa",
-        assigned_users: "Cooper Christian",
-        assigned_teams: "Ntag",
-        assigned_vendors: "utyut oo",
-        parent_asset:
-          "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
-        date_created: "14.09.2018"
+      () => {
+        setTimeout(
+          () =>
+            this.setState({ toast: { ...this.state.toast, visible: false } }),
+          3000
+        );
       }
-    ];
-    const renData = data.map(data => {
-      return (
-        <tr
-        onClick={this.fetchOneData}
-        data-toggle="modal"
-        data-target="#tabsModal" 
-        >
-          <td height="30px">{data.name}</td>
-          <td>{data.id}</td>
-          <td>{data.location}</td>
-          <td>{data.area}</td>
-          <td>{data.model}</td>
-          <td>{data.barcode}</td>
-          <td>{data.category}</td>
-          <td>{data.description}</td>
-          <td>{data.primary_user}</td>
-          <td>{data.assigned_users}</td>
-          <td>{data.assigned_teams}</td>
-          <td>{data.assigned_vendors}</td>
-          <td>{data.parent_asset}</td>
-          <td>{data.date_created}</td>
-        </tr>
-      );
-    });
+    );
+  };
+
+  handleClick = () => {
+    this.props.addNewAsset(this.state.data);
+  };
+
+   componentDidMount() {
+    this.props.getAssets();
+    this.props.getUsers();
+    this.props.getTeams();
+    this.props.getLocations()
+    
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.response.data) {
+      if (this.props.assetsData.indexOf(nextProps.response.data) === -1) this.props.assetsData.unshift(nextProps.response.data);
+    }
+    if (nextProps.response.success === true) {
+      this.setState({ showModal: false, data: {}, modalOpacity: 1 });
+      setTimeout(() => this.showToast(nextProps.response), 2000);
+    }
+  }
+
+  render() {
+    console.log("parts", this.props.parts)
+    let id = 1;
+    const renData = this.props.assetsData.length ? (this.props.assetsData
+      .map(data => {
+        return (
+          <tr
+          onClick={() => this.fetchOneData(data._id)}
+          >
+            <td height="30px">{data.assetName}</td>
+            <td>{id++}</td>
+            <td>{data.location}</td>
+            <td>{data.area}</td>
+            <td>{data.model}</td>
+            <td>{data.serialNumber}</td>
+            <td>{data.assetCategory}</td>
+            <td>{data.description}</td>
+            <td>{data.primaryUser}</td>
+            <td>{data.assignedUsers}</td>
+            <td>{data.assignedTeams}</td>
+            <td>{data.assignedVendors}</td>
+            <td>{data.parentAsset}</td>
+            <td>{data._id}</td>
+          </tr>
+        );
+      })
+      ) : (
+        <div>No Asset yet!</div>
+      )
+
     return (
       <div className="container side-container">
         <Sidebar />
-        <AddAsset handleChange={this.onChange} data={this.state.data} />
-        <AssetTabs handleChange={this.onChange} data={this.state.data} testing={this.state.testing} />
-
         <div className="breadcrumb">
           Assets
           <button
             type="button"
             className="btn btn-add float-right fs13 "
-            data-toggle="modal"
-            data-target="#assetModal"
+            onClick={this.handleShow}
           >
             <i className="fas fa-plus p5" />Add Asset
           </button>
@@ -171,9 +189,91 @@ class Assets extends Component {
             <tbody>{renData}</tbody>
           </table>
         </div>
+        <AddAsset 
+        handleChange={this.onChange}
+        handleClick={this.handleClick}
+        data={this.state.data}
+        response={this.props.response}
+        users={this.props.users}
+        teams={this.props.teams}
+        locations={this.props.locations}
+        assets={this.props.assetsData}
+        showModal={this.state.showModal}
+        handleClose={this.handleClose}
+        />
+        <AssetTabs 
+        handleShow={this.handleShow}
+        closeTabModal={this.closeTabModal}
+        TabsModal={this.state.TabsModal}
+        assetDetails={this.props.assetDetails}
+        modalOpacity={this.state.modalOpacity}
+        testing={this.state.testing} 
+        fetchFilteredAssets={this.fetchFilteredAssets}
+        filteredAssets={this.props.filteredAssets}
+        filteredWorkOrders={this.props.filteredWorkOrders}
+        showAddPartsModal={this.state.showAddPartsModal}
+        />
+        <AllPart 
+        parts={this.props.parts}
+        addPartsModal={this.state.addPartsModal}
+        closeAddPartsModal={this.state.closeAddPartsModal}
+        />
+        <Toast
+          level={this.state.toast.level}
+          message={this.state.toast.message}
+          visible={this.state.toast.visible}
+        />
       </div>
     );
   }
 }
 
-export default Assets;
+const mapStateToProps = state => ({
+  users: state._users.users,
+  assetsData: state._assets.assets,
+  parts: state._parts.parts,
+  filteredAssets: state._assets.filteredAssets,
+  filteredWorkOrders: state._workOrders.filteredWorkOrders,
+  assetDetails: state._assets.assetDetails,
+  teams: state._teams.teams,
+  response: state._assets.response,
+  locations: state._locations.locations
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewAsset: data => {
+      dispatch(_addAsset(data));
+    },
+    getAssets: () => {
+      dispatch(_getAssets());
+    },
+    getFilteredAssets: data => {
+      dispatch(_filterAssets(data));
+    },
+    getParts: () => {
+      dispatch(_getParts());
+    },
+    getFilteredWorkOrders: data => {
+      dispatch(_filterWorkOrders(data));
+    },
+    details: (id) => {
+      dispatch(_assetDetails(id));
+    },
+    getUsers: () => {
+      dispatch(_getUsers());
+    }, 
+    getTeams: () => {
+      dispatch(_getTeams());
+    },
+    getLocations: () => {
+      dispatch(_getLocations());
+    }
+  };
+};
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Assets);

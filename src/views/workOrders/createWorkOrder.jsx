@@ -1,34 +1,27 @@
 import React from "react";
+import { Modal } from 'react-bootstrap';
 
-const Create = ({ handleChange, data, selectData }) => {
+const Create = ({ handleChange, handleClick, data, response, users, assets, locations, selectData,showModal, handleClose  }) => {
+  
+  const _users = users.length ? (users.map((user) =>
+  <option key={user._id} value={user.name}>{user.name}</option>
+)):  (
+"");
+const _assets = assets.length ? (assets.map((asset) =>
+<option key={asset._id} value={asset.assetName}>{asset.assetName}</option>
+)):  (
+"");
+const _locations = locations.length ? (locations.map((location) =>
+<option key={location._id} value={location.name}>{location.name}</option>
+)):  (
+"");
+
   return (
-    <div
-      className="modal fade"
-      id="createWorkOrders"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="createWorkOrdersLabels"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5
-              className="modal-title center-align-text "
-              id="exampleModalLabel"
-            >
-              Create Work Order
-            </h5>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
+<Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create Work Order</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
           <label htmlFor="">
           Title:
             <input
@@ -165,8 +158,7 @@ const Create = ({ handleChange, data, selectData }) => {
                 name="assignedTo"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="1">One</option>
-                <option value="2">Two</option>
+                {_users}
                 
 
               </select>
@@ -179,10 +171,7 @@ const Create = ({ handleChange, data, selectData }) => {
                 value={data.additionalWorkers}
                 name="additionalWorkers"
                 className="browser-default custom-select custom-select-md mb-3"              >
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">three</option>
-                <option value="4">four</option>
+                {_users}
               </select>
             </label>
             <label htmlFor="">
@@ -193,8 +182,7 @@ const Create = ({ handleChange, data, selectData }) => {
                 name="location"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="abuja">abuja</option>
-                <option value="lagos">lagos</option>
+                {_locations}
               </select>
             </label>
             <label htmlFor="">
@@ -205,19 +193,24 @@ const Create = ({ handleChange, data, selectData }) => {
               name="asset"
               className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="1">One</option>
-                <option value="2">Two</option>
+             {_assets}
               </select>
             </label>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-dark fullwidth">
+            <span style={{ color: "red", fontSize: "13px" }}>
+              {response.message}
+            </span>
+          </Modal.Body>
+          <Modal.Footer>
+          <button
+              type="button"
+              className="btn btn-dark fullwidth"
+              onClick={handleClick}
+            >
               Submit
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </button>          
+            </Modal.Footer>
+        </Modal>
+
   );
 };
 

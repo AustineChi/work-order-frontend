@@ -1,31 +1,31 @@
 import React from "react";
+import { Modal } from 'react-bootstrap';
 
-const AddAsset = ({ handleChange, data }) => {
+const AddAsset = ({handleChange, handleClick, data, response,  users, teams, locations, assets, showModal, handleClose }) => {
+  const _users = users.length ? (users.map((user) =>
+  <option key={user._id} value={user.name}>{user.name}</option>
+)):  (
+"");
+const _teams = teams.length ? (teams.map((team) =>
+<option key={team._id} value={team.name}>{team.name}</option>
+)):  (
+"");
+const _assets = assets.length ? (assets.map((asset) =>
+<option key={asset._id} value={asset.assetName}>{asset.assetName}</option>
+)):  (
+"");
+const _locations = locations.length ? (locations.map((location) =>
+<option key={location._id} value={location.name}>{location.name}</option>
+)):  (
+"");
   return (
-    <div
-      className="modal fade"
-      id="assetModal"
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="assetModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title center-align-text " id="assetModalLabel">
+<Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>                
               Add New Asset
-            </h5>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
+    </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
           <label htmlFor="">
           Asset Name:
             <input
@@ -90,8 +90,7 @@ const AddAsset = ({ handleChange, data }) => {
                 name="location"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="abuja">abuja</option>
-                <option value="lagos">lagos</option>
+               {_locations}
               </select>
             </label>
             <label htmlFor="">
@@ -114,9 +113,7 @@ const AddAsset = ({ handleChange, data }) => {
                 name="parentAsset"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="">None</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
+               {_assets}
               </select>
             </label>
             <label htmlFor="">
@@ -127,8 +124,7 @@ const AddAsset = ({ handleChange, data }) => {
                 name="primaryUser"
                 className="browser-default custom-select custom-select-md mb-3"
               >
-                <option value="1">One</option>
-                <option value="2">Two</option>
+                {_users}
               </select>
             </label>
             <label htmlFor="">
@@ -139,10 +135,7 @@ const AddAsset = ({ handleChange, data }) => {
                 value={data.assignedUsers}
                 name="assignedUsers"
                 className="browser-default custom-select custom-select-md mb-3"              >
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">three</option>
-                <option value="4">four</option>
+              {_users}
               </select>
             </label>
             <label htmlFor="">
@@ -153,24 +146,7 @@ const AddAsset = ({ handleChange, data }) => {
                 value={data.assignedTeams}
                 name="assignedTeams"
                 className="browser-default custom-select custom-select-md mb-3"              >
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">three</option>
-                <option value="4">four</option>
-              </select>
-            </label>
-            <label htmlFor="">
-            Assigned Vendors
-              <select 
-                onChange={handleChange}
-                multiple={true}
-                value={data.assignedVendors}
-                name="assignedVendors"
-                className="browser-default custom-select custom-select-md mb-3"              >
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">three</option>
-                <option value="4">four</option>
+              {_teams}
               </select>
             </label>
             <label htmlFor="">
@@ -187,15 +163,21 @@ const AddAsset = ({ handleChange, data }) => {
                 <option value="4">four</option>
               </select>
             </label>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-dark fullwidth">
-              Submit
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            <span style={{ color: "red", fontSize: "13px" }}>
+              {response.message}
+            </span>
+          </Modal.Body>
+          <Modal.Footer>
+          <button 
+              onClick={handleClick}
+              type="button" 
+              className="btn btn-dark fullwidth"
+              >
+                Submit
+              </button>         
+            </Modal.Footer>
+        </Modal>
+
   );
 };
 
