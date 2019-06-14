@@ -8,8 +8,31 @@ const WorkOrderTabs = ({
   TabsModal,
   modalOpacity,
   handleShow,
-  closeTabModal
+  closeTabModal,
+  showAddPartsModal
 }) => {
+console.log("the sip", workOrderDetails.parts)
+let workOrderParts = workOrderDetails.parts || []
+  const _parts = workOrderParts.length ? (
+    workOrderParts.map((part, i) => {
+      return (
+        <tr className="table__row" key={i}>
+        <td className="table__cell">{part.partName}</td>
+        <td className="table__cell ">
+          <div className="table__cell-wrapper">{part.quantity}</div>
+        </td>
+        <td className="table__cell ">
+          <div className="table__cell-wrapper ">{part.cost}</div>
+        </td>
+      </tr>
+      );
+    })
+  ) : (
+    ""
+  );
+
+
+
   return (
     <Modal show={TabsModal} id="modal-lg" style={{ opacity: modalOpacity }}>
       <Modal.Header>
@@ -24,8 +47,8 @@ const WorkOrderTabs = ({
         </div>
       </Modal.Header>
       <Modal.Body>
-        <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example">
-          <Tab eventKey={1} title="Details">
+        <Tabs defaultActiveKey={"details"} animation={false} id="noanim-tab-example">
+          <Tab eventKey={"details"} title="Details">
             <div className="mb2">{workOrderDetails.description}</div>
             <div className="dropdown mb2">
               <button
@@ -90,7 +113,33 @@ const WorkOrderTabs = ({
                 </label>
               </div>
             </div>
+            
+            <div className="parts-box shadow-sm">
+        <h5>Parts</h5>
+
+
+        <table className="parts-table">
+  <thead className="table__header">
+    <tr className="table__row">
+      <th className="table__header-cell table__header-cell--inner">Part Name</th>
+      <th className="table__header-cell table__header-cell--inner small_table__cell_width"><div className="table__header-cell-wrapper">Qty</div></th>
+      <th className="table__header-cell table__header-cell--inner small_table__cell_width"><div className="table__header-cell-wrapper">Cost</div></th>
+    </tr>
+  </thead>
+  <tbody className="table__body">
+  {_parts}
+  </tbody>
+</table>
+
+
+        <button className="btn btn-rensource-blue" onClick={showAddPartsModal}>
+            <i className="fas fa-plus p5" />Add Parts
+          </button>
+         </div>
+ 
+           
           </Tab>
+          <Tab eventKey={"comments"} title="Comments"></Tab>
         </Tabs>
       </Modal.Body>
       <Modal.Footer />

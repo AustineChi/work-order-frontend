@@ -1,5 +1,5 @@
 import axios from 'axios';  
-import { ADD_WORK_ORDER, GET_WORK_ORDERS, DETAILS, FILTER } from './types';
+import { ADD_WORK_ORDER, GET_WORK_ORDERS, DETAILS, FILTER, WORK_ORDER_PARTS } from './types';
 
 const API_URL = 'http://localhost:4000/api';  
 
@@ -17,6 +17,21 @@ export const _addWorkOrder = (data) => dispatch => {
               })
         })
 }
+
+export const _updateWorkOrderParts = (data) => dispatch => {
+  axios.put(`${API_URL}/work/orders/update/parts/${data._id}`, data)
+  .then(res => dispatch({
+      type: WORK_ORDER_PARTS,
+      payload: res.data
+    }))
+  .catch((error) => {
+      dispatch({
+          type: WORK_ORDER_PARTS,
+          payload: error
+        })
+  })
+}
+
 
 export const _getWorkOrders = () => dispatch =>  {
      axios.get(`${API_URL}/work/orders/`)

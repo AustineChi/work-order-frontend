@@ -30,7 +30,9 @@ class Parts extends Component {
   handleShow = () => {
     this.setState({ showModal: true, modalOpacity: 0.5 });
   }
-
+  addNew = () => {
+    this.setState({ showModal: true, modalOpacity: 0.5, data: {} });
+  }
   closeTabModal = () => {
     this.setState({ TabsModal: false });
   }
@@ -131,6 +133,9 @@ class Parts extends Component {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
       setTimeout(() => this.showToast(nextProps.response), 2000);
     }
+    if (nextProps.partDetails) {
+      this.setState({ data: nextProps.partDetails });
+    }
   }
 
   
@@ -144,7 +149,7 @@ class Parts extends Component {
           <button
             type="button"
             className="btn btn-add float-right fs13 "
-            onClick={this.handleShow}
+            onClick={this.addNew}
           >
             <i className="fas fa-plus p5" />Add Part
           </button>

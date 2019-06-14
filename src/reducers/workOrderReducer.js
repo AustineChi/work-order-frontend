@@ -1,4 +1,4 @@
-import { ADD_WORK_ORDER, GET_WORK_ORDERS, DETAILS, FILTER } from '../actions/types';
+import { ADD_WORK_ORDER, GET_WORK_ORDERS, DETAILS, FILTER, WORK_ORDER_PARTS } from '../actions/types';
 
 const initialState = {
 workOrders: [],
@@ -24,6 +24,12 @@ export default function(state = initialState, action) {
           ...state, 
           response: {},
           workOrderDetails: action.payload
+          }
+          case WORK_ORDER_PARTS:
+          return { 
+          ...state, 
+          response: {},
+          assetDetails: action.payload.data
           }
           case FILTER: 
           return {

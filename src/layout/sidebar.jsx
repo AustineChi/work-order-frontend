@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import logo2 from '../images/Rensource.gif'
+import logo from '../images/Icon.png'
 
 const Sidebar = () => {
     return ( 
         <div id="sidebar">
         <div>
-        <img src={logo2} className="App-logo3" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo" />
+        Rensource
         </div>
 
         <div className="list-group list-group-flush">

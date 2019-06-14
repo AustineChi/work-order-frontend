@@ -1,23 +1,40 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
+import workOrders from '../views/workOrders';
 
-const AllPart = ({parts, closeAddPartsModal, addPartsModal}) => {
+const AllPart = ({parts, closeAddPartsModal, addPartsModal, handleChange, workOrderDetails, getPartQuantity, updateWorkOrderParts}) => {
   const _parts = parts.length ? (
-    parts.map(data => {
+    parts.map((data, key) => {
       return (
-        <div className="card">
+        <div className="card ">
         <div className="card-header">
+        <input 
+        onChange={handleChange}
+        type="checkbox" 
+        name="partName" 
+        data-tag={"parts"}
+        //checked={workOrderDetails.parts.indexOf(data.partName) !== -1}
+        value={data.partName} 
+        className="m-all" />
            {data.partName}
         </div>
-        <div className="card-body">
+        <div className="card-body effect4">
          <span>Available Qty: {data.quantity}</span>             
-         <span><input type="text" name="quantity" id="quantity"/> </span> 
+         <span className="add-parts-Input-field"> Input Qty
+         <input 
+         onChange={getPartQuantity}
+         type="text" 
+         name="quantity"
+         id={data.partName} 
+         data-tag={"parts"}
+         defaultValue={parts.quantity || 1}
+/> </span> 
         </div>
       </div> 
       );
     })
   ) : (
-    <div>No Part available!</div>
+    <div>Loading....</div>
   );
     return ( 
         <Modal show={addPartsModal} onHide={closeAddPartsModal}>
@@ -28,7 +45,9 @@ const AllPart = ({parts, closeAddPartsModal, addPartsModal}) => {
              <div className="card-box"> {_parts} </div>
 </Modal.Body>
         <Modal.Footer>
-        
+        <button className="btn btn-white" onClick={updateWorkOrderParts}>
+            <i className="fas fa-plus p5" />Submit
+          </button>
         </Modal.Footer>
       </Modal>
      );

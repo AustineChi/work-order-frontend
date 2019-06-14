@@ -1,10 +1,11 @@
-import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER } from '../actions/types';
+import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER, UPDATE } from '../actions/types';
 
 const initialState = {
 assets: [],
 filteredAssets: [],
 response: {},
-assetDetails: {}
+assetDetails: {},
+addPartsModal: false
 }
 
 export default function(state = initialState, action) {
@@ -24,6 +25,13 @@ export default function(state = initialState, action) {
           ...state, 
           response: {},
           assetDetails: action.payload
+          }
+          case UPDATE:
+          return { 
+          ...state, 
+          response: {},
+          assetDetails: action.payload.data,
+          addPartsModal: action.payload.success
           }
           case FILTER: 
           return {

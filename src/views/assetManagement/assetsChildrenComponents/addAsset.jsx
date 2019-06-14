@@ -22,7 +22,7 @@ const _locations = locations.length ? (locations.map((location) =>
 <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>                
-              Add New Asset
+               {data._id? ("Update Asset"): ("Add New Asset")}
     </Modal.Title>
           </Modal.Header>
           <Modal.Body>

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
 import AddAsset from "./assetsChildrenComponents/addAsset";
 import AssetTabs from "./assetsChildrenComponents/assetTabs";
-import AllPart from "../../utility/allParts";
+import AddPartsToAssets from "../../utility/addPartsToAssets";
 import { connect } from "react-redux";
-import {_addAsset, _getAssets, _assetDetails, _filterAssets} from "../../actions/assetActions";
+import {_addAsset, _getAssets, _assetDetails, _filterAssets, _updateAsset} from "../../actions/assetActions";
 import { _getParts } from "../../actions/partActions";
 import { _filterWorkOrders} from "../../actions/workOrderActions";
 import { _getUsers } from "../../actions/userActions";
@@ -34,10 +34,13 @@ class Assets extends Component {
     this.setState({ showModal: true, modalOpacity: 0.5 });
   }
 
+  addNew = () => {
+    this.setState({ showModal: true, modalOpacity: 0.5, data: {} });
+  }
+
   showAddPartsModal = () => {
-    // this.props.getParts();
-    // this.setState({ addPartsModal: true, modalOpacity: 0.5 });
-  alert("hello")
+    this.props.getParts();
+    this.setState({ addPartsModal: true, modalOpacity: 0.5 });
   }
 
   closeAddPartsModal = () => {
@@ -47,7 +50,7 @@ class Assets extends Component {
     this.setState({ TabsModal: false });
   }
   fetchOneData = (id) => {
-    this.props.details(id)
+    this.props.details(id);
     this.setState({ TabsModal: true, modalOpacity: 1 });
   }
 
@@ -80,6 +83,22 @@ class Assets extends Component {
     });
   };
 
+  alternativeOnChange = e => {
+    let data = this.state.data;
+      let value = data[[e.target.name]] || [];
+        if (value.indexOf(e.target.value) === -1) {
+          value.push(e.target.value);
+        }
+        else if (value.indexOf(e.target.value) !== -1){
+          let index = value.indexOf(e.target.value);
+          if (index !== -1) value.splice(index, 1);
+        }
+    data[[e.target.name]] = value;  
+    this.setState({
+      data: data
+    });
+  };
+
   showToast = data => {
     this.setState(
       {
@@ -104,6 +123,10 @@ class Assets extends Component {
     this.props.addNewAsset(this.state.data);
   };
 
+  updateAsset = () => {
+    this.props.updateAsset(this.state.data);   
+  }
+
    componentDidMount() {
     this.props.getAssets();
     this.props.getUsers();
@@ -121,10 +144,15 @@ class Assets extends Component {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
       setTimeout(() => this.showToast(nextProps.response), 2000);
     }
+    if (nextProps.assetDetails) {
+      this.setState({ data: nextProps.assetDetails });
+    }
+    if (nextProps.addPartsModal === true) {
+      this.setState({ addPartsModal: false, modalOpacity: 1 });
+    }
   }
 
   render() {
-    console.log("parts", this.props.parts)
     let id = 1;
     const renData = this.props.assetsData.length ? (this.props.assetsData
       .map(data => {
@@ -161,7 +189,7 @@ class Assets extends Component {
           <button
             type="button"
             className="btn btn-add float-right fs13 "
-            onClick={this.handleShow}
+            onClick={this.addNew}
           >
             <i className="fas fa-plus p5" />Add Asset
           </button>
@@ -189,6 +217,7 @@ class Assets extends Component {
             <tbody>{renData}</tbody>
           </table>
         </div>
+
         <AddAsset 
         handleChange={this.onChange}
         handleClick={this.handleClick}
@@ -201,6 +230,7 @@ class Assets extends Component {
         showModal={this.state.showModal}
         handleClose={this.handleClose}
         />
+
         <AssetTabs 
         handleShow={this.handleShow}
         closeTabModal={this.closeTabModal}
@@ -211,13 +241,18 @@ class Assets extends Component {
         fetchFilteredAssets={this.fetchFilteredAssets}
         filteredAssets={this.props.filteredAssets}
         filteredWorkOrders={this.props.filteredWorkOrders}
-        showAddPartsModal={this.state.showAddPartsModal}
+        showAddPartsModal={this.showAddPartsModal}
         />
-        <AllPart 
+
+        <AddPartsToAssets 
+        handleChange={this.alternativeOnChange}
         parts={this.props.parts}
         addPartsModal={this.state.addPartsModal}
-        closeAddPartsModal={this.state.closeAddPartsModal}
+        closeAddPartsModal={this.closeAddPartsModal}
+        assetDetails={this.props.assetDetails}
+        updateAsset={this.updateAsset}
         />
+
         <Toast
           level={this.state.toast.level}
           message={this.state.toast.message}
@@ -250,6 +285,9 @@ const mapDispatchToProps = dispatch => {
     },
     getFilteredAssets: data => {
       dispatch(_filterAssets(data));
+    },
+    updateAsset: data => {
+      dispatch(_updateAsset(data));
     },
     getParts: () => {
       dispatch(_getParts());

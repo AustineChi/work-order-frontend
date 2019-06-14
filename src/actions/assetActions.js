@@ -1,5 +1,5 @@
 import axios from 'axios';  
-import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER } from './types';
+import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER, UPDATE } from './types';
 
 const API_URL = 'http://localhost:4000/api';  
 
@@ -16,6 +16,20 @@ export const _addAsset = (data) => dispatch => {
                 payload: error
               })
         })
+}
+
+export const _updateAsset = (data) => dispatch => {
+  axios.put(`${API_URL}/assets/update/${data._id}`, data)
+  .then(res => dispatch({
+      type: UPDATE,
+      payload: res.data
+    }))
+  .catch((error) => {
+      dispatch({
+          type: UPDATE,
+          payload: error
+        })
+  })
 }
 
 export const _getAssets = () => dispatch =>  {

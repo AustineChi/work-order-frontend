@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
 import CreateWorkOrder from "./createWorkOrder";
+import AllParts from "../../utility/allParts";
 import WorkOrderTabs from "./workOrderTabs";
 import { connect } from "react-redux";
-import {_getAssets} from "../../actions/assetActions";
+import { _getAssets } from "../../actions/assetActions";
 import { _getUsers } from "../../actions/userActions";
-import { _addWorkOrder, _getWorkOrders, _workOrderDetails } from "../../actions/workOrderActions";
+import { _getParts } from "../../actions/partActions";
+import {
+  _addWorkOrder,
+  _getWorkOrders,
+  _workOrderDetails,
+  _updateWorkOrderParts
+} from "../../actions/workOrderActions";
 import { _getLocations } from "../../actions/locationActions";
 
 import Toast from "../../utility/toast";
@@ -15,44 +22,66 @@ class Index extends Component {
     data: {},
     showModal: false,
     TabsModal: false,
+    addPartsModal: false,
     modalOpacity: 1,
+    workOrderPart: {
+      partName: "",
+      quantity: 1
+    },
     toast: {
       visible: false,
       level: "success",
       message: null
     },
-    select: [{
-      "_id": 1,
-      "selectValue": "select One"
-    }, {
-      "_id": 2,
-      "selectValue": "Select Two"
-    }, {
-      "_id": 3,
-      "selectValue": "Select Three"
-    }]
+    select: [
+      {
+        _id: 1,
+        selectValue: "select One"
+      },
+      {
+        _id: 2,
+        selectValue: "Select Two"
+      },
+      {
+        _id: 3,
+        selectValue: "Select Three"
+      }
+    ]
   };
 
   handleClose = () => {
     this.setState({ showModal: false, modalOpacity: 1 });
-  }
+  };
 
   handleShow = () => {
     this.setState({ showModal: true, modalOpacity: 0.5 });
-  }
+  };
+
+  addNew = () => {
+    this.setState({ showModal: true, modalOpacity: 0.5, data: {} });
+  };
+
   closeTabModal = () => {
     this.setState({ TabsModal: false });
-  }
+  };
 
-  fetchOneData = (id) => {
-    this.props.details(id)
+  showAddPartsModal = () => {
+    this.props.getParts();
+    this.setState({ addPartsModal: true, modalOpacity: 0.5 });
+  };
+
+  closeAddPartsModal = () => {
+    this.setState({ addPartsModal: false, modalOpacity: 1 });
+  };
+
+  fetchOneData = id => {
+    this.props.details(id);
     this.setState({ TabsModal: true });
-
-  }
+  };
 
   handleUpdate = () => {
-    console.log("update function")
-  }
+    console.log("update function");
+  };
 
   onChange = e => {
     let data = this.state.data;
@@ -62,23 +91,71 @@ class Index extends Component {
       for (let i = 0, l = options.length; i < l; i++) {
         if (options[i].selected && value.indexOf(options[i].value) === -1) {
           value.push(options[i].value);
-        }
-        else if (options[i].selected && value.indexOf(options[i].value) !== -1){
+        } else if (
+          options[i].selected &&
+          value.indexOf(options[i].value) !== -1
+        ) {
           let index = value.indexOf(options[i].value);
           if (index !== -1) value.splice(index, 1);
         }
       }
-    data[[e.target.name]] = value         
-    }
-    else {
-      data[[e.target.name]] = e.target.value; 
+      data[[e.target.name]] = value;
+    } else {
+      data[[e.target.name]] = e.target.value;
     }
     this.setState({
       data: data
     });
-    console.log(this.state.data)
+    console.log(this.state.data);
   };
 
+  getPartQuantity = e => {
+    let data = this.state.data;
+    let value = data[[e.target.getAttribute("data-tag")]] || [];
+    let obj = value.find(data => data.partName == e.target.id);
+    if (obj) {
+      obj.quantity = e.target.value;
+      this.setState({
+        workOrderPart: {
+          ...this.state.workOrderPart,
+          obj
+        }
+      });
+    } else {
+      this.setState({
+        workOrderPart: {
+          ...this.state.workOrderPart,
+          quantity: e.target.value
+        }
+      });
+    }
+  };
+
+  alternativeOnChange = e => {
+    let data = this.state.data;
+    let value = data[[e.target.getAttribute("data-tag")]] || [];
+    let obj = value.find(data => data.partName == e.target.value);
+    if (obj) {
+      let index = value.indexOf(obj);
+      if (index !== -1) value.splice(index, 1);
+    } else {
+      value.push({
+        partName: e.target.value,
+        quantity: this.state.workOrderPart.quantity
+      });
+      this.setState({
+        workOrderPart: {
+          ...this.state.workOrderPart,
+          quantity: 1
+        }
+      });
+    }
+    data[[e.target.getAttribute("data-tag")]] = value;
+    this.setState({
+      data: data
+    });
+    console.log("objs", this.state.data);
+  };
 
   showToast = data => {
     this.setState(
@@ -92,9 +169,9 @@ class Index extends Component {
       },
       () => {
         setTimeout(
-        () => 
-         this.setState({ toast: { ...this.state.toast, visible: false } }),
-              3000 
+          () =>
+            this.setState({ toast: { ...this.state.toast, visible: false } }),
+          3000
         );
       }
     );
@@ -104,6 +181,9 @@ class Index extends Component {
     this.props.addNewWorkOrder(this.state.data);
   };
 
+  updateWorkOrderParts =()=> {
+    this.props.updateWorkOrderParts(this.state.data)
+  }
   componentDidMount() {
     this.props.getAssets();
     this.props.getUsers();
@@ -113,42 +193,45 @@ class Index extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.response.data) {
-      if (this.props.workOrdersData.indexOf(nextProps.response.data) === -1) this.props.workOrdersData.unshift(nextProps.response.data);
+      if (this.props.workOrdersData.indexOf(nextProps.response.data) === -1)
+        this.props.workOrdersData.unshift(nextProps.response.data);
     }
     if (nextProps.response.success === true) {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
       setTimeout(() => this.showToast(nextProps.response), 2000);
     }
+    if (nextProps.workOrderDetails) {
+      this.setState({ data: nextProps.workOrderDetails });
+    }
   }
 
   render() {
-    console.log("work", this.props)
-    let id = 1;
-    const renData = this.props.workOrdersData.length ? (this.props.workOrdersData
-      .map(data => {
+    console.log("props world",this.props)
+    const renData = this.props.workOrdersData.length ? (
+      this.props.workOrdersData.map(data => {
         return (
           <tr
-          onClick={() => this.fetchOneData(data._id)}
-          data-toggle="modal"
-          data-target="#tabsModal" 
+            onClick={() => this.fetchOneData(data._id)}
+            data-toggle="modal"
+            data-target="#tabsModal"
           >
-          <td>
-            <input type="checkbox" name="vehicle2" value="Car" />
-          </td>
-          <td>{data.title}</td>
-          <td>{data.dueDate}</td>
-          <td>Open</td>
-          <td>{data.priority}</td>
-          <td>{data.assignedTo}</td>
-          <td>{data.location}</td>
-          <td>{data.updated}</td>
-          <td>{data.created}</td>
+            <td>
+              <input type="checkbox" name="vehicle2" value="Car" />
+            </td>
+            <td>{data.title}</td>
+            <td>{data.dueDate}</td>
+            <td>Open</td>
+            <td>{data.priority}</td>
+            <td>{data.assignedTo}</td>
+            <td>{data.location}</td>
+            <td>{data.updated}</td>
+            <td>{data.created}</td>
           </tr>
         );
       })
-      ) : (
-        <div>No Work Orders yet!</div>
-      )
+    ) : (
+      <div>No Work Orders yet!</div>
+    );
 
     return (
       <div className="container side-container">
@@ -158,9 +241,10 @@ class Index extends Component {
           <button
             type="button"
             className="btn btn-add float-right fs13"
-            onClick={this.handleShow}
+            onClick={this.addNew}
           >
-            <i className="fas fa-plus p5" />Create Work Order
+            <i className="fas fa-plus p5" />
+            Create Work Order
           </button>
         </div>
         <table className="table table-striped">
@@ -181,26 +265,36 @@ class Index extends Component {
           </thead>
           <tbody>{renData}</tbody>
         </table>
-        <CreateWorkOrder 
-        handleChange={this.onChange} 
-        handleClick={this.handleClick}
-        data={this.state.data}
-        response={this.props.response}
-        users={this.props.users}
-        assets={this.props.assets}
-        locations={this.props.locations}
-        selectData={this.state.select} 
-        showModal={this.state.showModal}
-        handleClose={this.handleClose}
+        <CreateWorkOrder
+          handleChange={this.onChange}
+          handleClick={this.handleClick}
+          data={this.state.data}
+          response={this.props.response}
+          users={this.props.users}
+          assets={this.props.assets}
+          locations={this.props.locations}
+          selectData={this.state.select}
+          showModal={this.state.showModal}
+          handleClose={this.handleClose}
         />
-        <WorkOrderTabs 
-        handleUpdate={this.handleUpdate} 
-        response={this.props.response}
-         workOrderDetails={this.props.workOrderDetails}
-         handleShow={this.handleShow}
-         closeTabModal={this.closeTabModal}
-         TabsModal={this.state.TabsModal}
-         modalOpacity={this.state.modalOpacity}
+        <WorkOrderTabs
+          handleUpdate={this.handleUpdate}
+          response={this.props.response}
+          workOrderDetails={this.props.workOrderDetails}
+          handleShow={this.handleShow}
+          closeTabModal={this.closeTabModal}
+          TabsModal={this.state.TabsModal}
+          modalOpacity={this.state.modalOpacity}
+          showAddPartsModal={this.showAddPartsModal}
+        />
+        <AllParts
+          parts={this.props.parts}
+          addPartsModal={this.state.addPartsModal}
+          closeAddPartsModal={this.closeAddPartsModal}
+          handleChange={this.alternativeOnChange}
+          getPartQuantity={this.getPartQuantity}
+          workOrderDetails={this.props.workOrderDetails}
+          updateWorkOrderParts={this.updateWorkOrderParts}
         />
         <Toast
           level={this.state.toast.level}
@@ -218,7 +312,8 @@ const mapStateToProps = state => ({
   workOrderDetails: state._workOrders.workOrderDetails,
   response: state._workOrders.response,
   assets: state._assets.assets,
-  locations: state._locations.locations
+  locations: state._locations.locations,
+  parts: state._parts.parts
 });
 
 const mapDispatchToProps = dispatch => {
@@ -226,17 +321,23 @@ const mapDispatchToProps = dispatch => {
     addNewWorkOrder: data => {
       dispatch(_addWorkOrder(data));
     },
+    updateWorkOrderParts: data =>{
+      dispatch(_updateWorkOrderParts(data));
+    },
     getAssets: () => {
       dispatch(_getAssets());
     },
-    details: (id) => {
+    details: id => {
       dispatch(_workOrderDetails(id));
     },
     getUsers: () => {
       dispatch(_getUsers());
-    }, 
+    },
     getWorkOrders: () => {
       dispatch(_getWorkOrders());
+    },
+    getParts: () => {
+      dispatch(_getParts());
     },
     getLocations: () => {
       dispatch(_getLocations());
@@ -248,4 +349,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Index);
-

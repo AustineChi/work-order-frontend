@@ -1,6 +1,6 @@
 import React from "react";
 import Details from "./details";
-import PartTab from "../../../utility/PartTab";
+import PartTab from "../../../utility/parts";
 import AssetTab from "../../../utility/assetTab";
 import WorkOrderTab from "../../../utility/workOrderTab";
 import { Modal, Tab, Tabs } from "react-bootstrap";
@@ -18,6 +18,7 @@ const AssetTabs = ({
   getParts,
   showAddPartsModal
 }) => {
+  console.log("wika filica", assetDetails.parts)
   return (
     <Modal show={TabsModal} id="modal-lg" style={{ opacity: modalOpacity }}>
       <Modal.Header>
@@ -44,7 +45,7 @@ const AssetTabs = ({
             <AssetTab filteredAssets={filteredAssets}/>
           </Tab>
           <Tab eventKey={"parts"} title="Parts">
-            No parts assigned to this Asset
+          <PartTab parts={assetDetails.parts || []}/>
             <button className="btn btn-white" onClick={showAddPartsModal}>
             <i className="fas fa-plus p5" />Add Parts
           </button>

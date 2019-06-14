@@ -17,7 +17,7 @@ const _locations = locations.length ? (locations.map((location) =>
   return (
 <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Add Part / Inventory</Modal.Title>
+            <Modal.Title>{data._id? ("Update Part / Inventory"): ("Add Part / Inventory")}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <label htmlFor="">

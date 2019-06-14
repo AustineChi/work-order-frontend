@@ -14,5 +14,7 @@ export const GET_WORK_ORDERS = 'GET_WORK_ORDERS';
 export const ADD_WORK_ORDER = 'ADD_WORK_ORDER';
 export const DETAILS = 'DETAILS';
 export const FILTER = 'FILTER';
+export const UPDATE ='UPDATE';
+export const WORK_ORDER_PARTS  = 'WORK_ORDER_PARTS';
 export const RESET_RESPONSE = 'RESET_RESPONSE';
 

@@ -40,7 +40,6 @@ html {
     height: 60px;
     pointer-events: none;
     margin: 10px 2%;
-    position: fixed;
     left: 2%;
   }
   .App-logo2 {
@@ -370,6 +369,9 @@ transition: all 1s;
 .mb2 {
 margin-bottom: 20px
 }
+.m-all {
+  margin: 7px
+}
 
 textarea {
 	display: block;
@@ -536,4 +538,61 @@ label {
   .modal-content {
     min-height: 80vh
   }
+}
+.add-parts-Input-field {
+  float: right;
+  input {
+    width: 40px;
+    padding: 7px;
+    margin: 0 4px
+  }
+}
+.parts-box {
+	width:80%;
+	min-height:170px;
+  background:#fff;
+  padding: 20px;
+  margin:20px auto;
+  position: relative;
+  .btn-rensource-blue {
+    background-color: #073553;;
+    color: #fff;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+}
+
+.parts-table {
+  display: table;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.table__header-cell {
+  text-align: left;
+  padding: 10px
+}
+
+.table__header-cell--inner,
+.table__cell--inner {
+  text-align: left;
+  background-color: rgba(242, 242, 242, 0.5);
+}
+
+.table__header-cell,
+.table__cell {
+  border-bottom: solid 1px $color-yellow;
+  border-right: solid 1px $color-yellow;
+  padding: 7px 16px;
+  
+  .table__header-cell-wrapper,
+  .table__cell-wrapper {
+    padding: 0 16px; 
+  }
+}
+.small_table__cell_width {
+  width: 150px
 }
