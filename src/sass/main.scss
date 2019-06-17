@@ -36,11 +36,11 @@ html {
   text-align: center
 }
 .App-logo {
-    animation: App-logo-spin infinite 10s linear;
-    height: 60px;
-    pointer-events: none;
-    margin: 10px 2%;
-    left: 2%;
+  animation: App-logo-spin infinite 7s linear;
+  height: 40px;
+  pointer-events: none;
+  margin: 30px 2%;
+  left: 2%;
   }
   .App-logo2 {
     height: 38px;
@@ -236,7 +236,9 @@ transition: all 1s;
       transform: rotate(360deg);
     }
   }
-  
+  .list-group-item {
+    background-color: $color-blue 
+  }
   nav {
     padding: 0.25rem 0;
     padding-right: 3%;
@@ -287,8 +289,9 @@ transition: all 1s;
     border-bottom: 1px solid #585858;
   }
   
-  .nav-list > li > a:hover {
-    background-color: #073553;
+  .nav-list > li > a:hover, .nav-list > li > a:active  {
+    background-color: $color-yellow;
+    color: $background-color-dark
   }
 
   ul {
@@ -333,13 +336,20 @@ transition: all 1s;
   left: 269px;
   width: 270px;
   height: 100vh;
-  top: -0.4vh;  margin-left: -270px;
-  background: #f8f9fa;
+  top: 0;  margin-left: -270px;
+  background: #073553;
+  color: #fff;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  border: 1px solid #dee2e6!important
+  .logo-area {
+    padding: 0.25rem 10px;
+    font-weight: 700;
+    font-size: 21px
+
+  }
+  //border: 1px solid #dee2e6!important
 }
 
 .breadcrumb {
@@ -595,4 +605,9 @@ label {
 }
 .small_table__cell_width {
   width: 150px
+}
+.wo-comment-box {
+  position: absolute;
+    bottom: 12px;
+    max-width: 600px;
 }

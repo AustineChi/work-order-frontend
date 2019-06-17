@@ -18,11 +18,11 @@ class Locations extends Component {
 
   handleClose = () => {
     this.setState({ showModal: false });
-  }
+  };
 
   handleShow = () => {
     this.setState({ showModal: true });
-  }
+  };
   onChange = e => {
     let data = this.state.data;
     data[[e.target.name]] = e.target.value;
@@ -58,10 +58,11 @@ class Locations extends Component {
   componentDidMount() {
     this.props.getLocations();
   }
-  
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.response.data) {
-      if (this.props.locationsData.indexOf(nextProps.response.data) === -1) this.props.locationsData.unshift(nextProps.response.data);
+      if (this.props.locationsData.indexOf(nextProps.response.data) === -1)
+        this.props.locationsData.unshift(nextProps.response.data);
     }
     if (nextProps.response.success === true) {
       this.setState({ showModal: false, data: {} });
@@ -71,19 +72,18 @@ class Locations extends Component {
 
   render() {
     const locationList = this.props.locationsData.length ? (
-      this.props.locationsData
-        .map(location => {
-          return (
-            <div className="card" key={location.name}>
-              <div className="card-header">
-                {location.name} <i className="fas fa-ellipsis-v fr" />
-              </div>
-              <div className="card-body">
-                <i className="fas fa-map-marker-alt p5" /> {location.address}
-              </div>
+      this.props.locationsData.map(location => {
+        return (
+          <div className="card" key={location.name}>
+            <div className="card-header">
+              {location.name} <i className="fas fa-ellipsis-v fr" />
             </div>
-          );
-        })
+            <div className="card-body">
+              <i className="fas fa-map-marker-alt p5" /> {location.address}
+            </div>
+          </div>
+        );
+      })
     ) : (
       <div>No Locations yet!</div>
     );

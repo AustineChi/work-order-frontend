@@ -12,9 +12,11 @@ import Locations from "./views/workOrders/locations";
 import Teams from "./views/workOrders/teams";
 import Assets from "./views/assetManagement/assets";
 import Parts from "./views/assetManagement/parts";
+import WorkOrderReport from "./views/workOrders/reports";
 // Add all icons to the library so you can use it in your page
 
 function App() {
+  
   return (
     <Provider store={store}>
     <div className="app">
@@ -25,6 +27,7 @@ function App() {
           <Route path="/change/log" component={ChangeLog} />
           <Route path="/login" component={Login} />
           <Route path="/work/orders" component={WorkOrders} />
+          <Route path="/work/order/report" component={WorkOrderReport} />
           <Route path="/teams" component={Teams} />
           <Route path="/locations" component={Locations} />
           <Route path="/assets" component={Assets} />

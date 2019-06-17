@@ -1,7 +1,6 @@
 import axios from 'axios';  
+import { API_URL } from './apiMiddleware';
 import { ADD_TEAM, GET_TEAMS } from './types';
-
-const API_URL = 'http://localhost:4000/api';  
 
 
 export const _addTeam = (data) => dispatch => {

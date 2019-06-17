@@ -1,8 +1,6 @@
 import axios from 'axios';  
+import { API_URL } from './apiMiddleware';
 import { ADD_LOCATION, GET_LOCATIONS } from './types';
-
-const API_URL = 'http://localhost:4000/api';  
-
 
 export const _addLocation = (data) => dispatch => {
         axios.post(`${API_URL}/locations/add`, data)

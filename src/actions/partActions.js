@@ -1,7 +1,7 @@
 import axios from 'axios';  
+import { API_URL } from './apiMiddleware';
 import { ADD_PART, GET_PARTS, DETAILS } from './types';
 
-const API_URL = 'http://localhost:4000/api';  
 
 
 export const _addPart = (data) => dispatch => {

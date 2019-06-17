@@ -33,6 +33,7 @@ const AddTeam = ({ handleChange, handleClick, data, response,  users, showModal,
                 value={data.teamMembers}
                 name="teamMembers"
                 className="browser-default custom-select custom-select-md mb-3"              >
+                <option value="">none</option>
                  {_users}
               </select>
             </label>

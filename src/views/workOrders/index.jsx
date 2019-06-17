@@ -62,7 +62,7 @@ class Index extends Component {
   };
 
   closeTabModal = () => {
-    this.setState({ TabsModal: false });
+    this.setState({ TabsModal: false, data: {} });
   };
 
   showAddPartsModal = () => {
@@ -181,9 +181,9 @@ class Index extends Component {
     this.props.addNewWorkOrder(this.state.data);
   };
 
-  updateWorkOrderParts =()=> {
-    this.props.updateWorkOrderParts(this.state.data)
-  }
+  updateWorkOrderParts = () => {
+    this.props.updateWorkOrderParts(this.state.data);
+  };
   componentDidMount() {
     this.props.getAssets();
     this.props.getUsers();
@@ -202,11 +202,12 @@ class Index extends Component {
     }
     if (nextProps.workOrderDetails) {
       this.setState({ data: nextProps.workOrderDetails });
+      console.log(nextProps.workOrderDetails, "snako");
     }
   }
 
   render() {
-    console.log("props world",this.props)
+    console.log("props world", this.props);
     const renData = this.props.workOrdersData.length ? (
       this.props.workOrdersData.map(data => {
         return (
@@ -321,7 +322,7 @@ const mapDispatchToProps = dispatch => {
     addNewWorkOrder: data => {
       dispatch(_addWorkOrder(data));
     },
-    updateWorkOrderParts: data =>{
+    updateWorkOrderParts: data => {
       dispatch(_updateWorkOrderParts(data));
     },
     getAssets: () => {

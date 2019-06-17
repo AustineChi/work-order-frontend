@@ -1,8 +1,6 @@
 import axios from 'axios';  
+import { API_URL } from './apiMiddleware';
 import { ADD_WORK_ORDER, GET_WORK_ORDERS, DETAILS, FILTER, WORK_ORDER_PARTS } from './types';
-
-const API_URL = 'http://localhost:4000/api';  
-
 
 export const _addWorkOrder = (data) => dispatch => {
         axios.post(`${API_URL}/work/orders/add`, data)
@@ -74,3 +72,4 @@ export const _filterWorkOrders = (data) => dispatch => {
         })
   })
 }
+

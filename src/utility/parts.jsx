@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
 
-const Parts = ({parts}) => {
+const Parts = ({ parts }) => {
+  console.log("the wahala", parts);
+  let __parts = parts || [];
+  const _part = __parts.length ? (
+    __parts.map((data, i) => {
+      return (
+        <div className="card" key={i}>
+          <div className="card-body">{data}</div>
+        </div>
+      );
+    })
+  ) : (
+    <div> No parts assigned to this Asset!</div>
+  );
+  return <div className="card-box">{_part}</div>;
+};
 
-     const _part = parts.length ? (
-      parts.map(data => {
-        return (
-            <div className="card">
-            <div className="card-body">
-            {data}
-            </div>
-          </div> 
-        );
-      })
-    ) : (
-      <div> No parts assigned to this Asset!</div>
-    );
-    return <div className="card-box">{_part}</div>;
-}
- 
 export default Parts;

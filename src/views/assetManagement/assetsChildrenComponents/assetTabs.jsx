@@ -18,7 +18,7 @@ const AssetTabs = ({
   getParts,
   showAddPartsModal
 }) => {
-  console.log("wika filica", assetDetails.parts)
+  console.log("wika filica", assetDetails);
   return (
     <Modal show={TabsModal} id="modal-lg" style={{ opacity: modalOpacity }}>
       <Modal.Header>
@@ -33,22 +33,27 @@ const AssetTabs = ({
         </div>
       </Modal.Header>
       <Modal.Body>
-        <Tabs defaultActiveKey={"details"} animation={false} id="noanim-tab-example" onSelect={(key)  => fetchFilteredAssets({key }, assetDetails.assetName)}
->
+        <Tabs
+          defaultActiveKey={"details"}
+          animation={false}
+          id="noanim-tab-example"
+          onSelect={key => fetchFilteredAssets({ key }, assetDetails.assetName)}
+        >
           <Tab eventKey={"details"} title="Details">
             <Details assetDetails={assetDetails} />
           </Tab>
           <Tab eventKey={"workorders"} title="Work Orders">
-          <WorkOrderTab filteredWorkOrders={filteredWorkOrders}/>
+            <WorkOrderTab filteredWorkOrders={filteredWorkOrders} />
           </Tab>
-          <Tab eventKey={"assets"} title="Assets" >
-            <AssetTab filteredAssets={filteredAssets}/>
+          <Tab eventKey={"assets"} title="Assets">
+            <AssetTab filteredAssets={filteredAssets} />
           </Tab>
           <Tab eventKey={"parts"} title="Parts">
-          <PartTab parts={assetDetails.parts || []}/>
+            <PartTab parts={assetDetails.parts} />
             <button className="btn btn-white" onClick={showAddPartsModal}>
-            <i className="fas fa-plus p5" />Add Parts
-          </button>
+              <i className="fas fa-plus p5" />
+              Add Parts
+            </button>
           </Tab>
         </Tabs>
       </Modal.Body>

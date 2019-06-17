@@ -17,4 +17,5 @@ export const FILTER = 'FILTER';
 export const UPDATE ='UPDATE';
 export const WORK_ORDER_PARTS  = 'WORK_ORDER_PARTS';
 export const RESET_RESPONSE = 'RESET_RESPONSE';
+export const RESET = 'RESET'
 

@@ -3,7 +3,7 @@ import Sidebar from "../../layout/sidebar";
 import AddPart from "./partsChildrenComponents/addPart";
 import PartTabs from "./partsChildrenComponents/partTabs";
 import { connect } from "react-redux";
-import { _addPart, _getParts, _PartDetails} from "../../actions/partActions";
+import { _addPart, _getParts, _PartDetails } from "../../actions/partActions";
 import { _getUsers } from "../../actions/userActions";
 import { _getTeams } from "../../actions/teamActions";
 import { _getLocations } from "../../actions/locationActions";
@@ -20,54 +20,51 @@ class Parts extends Component {
       level: "success",
       message: null
     },
-    testing: "carl"
   };
 
   handleClose = () => {
     this.setState({ showModal: false, modalOpacity: 1 });
-  }
+  };
 
   handleShow = () => {
     this.setState({ showModal: true, modalOpacity: 0.5 });
-  }
+  };
   addNew = () => {
     this.setState({ showModal: true, modalOpacity: 0.5, data: {} });
-  }
+  };
   closeTabModal = () => {
     this.setState({ TabsModal: false });
-  }
+  };
 
-  fetchOneData = (id) => {
+  fetchOneData = id => {
     this.props.details(id);
     this.setState({ TabsModal: true });
-  }
+  };
 
-  tableData =(prop) =>{
+  tableData = prop => {
     let id = 1;
-   const renData = prop.partsData.length ? (prop.partsData
-    .map(data => {
-      return (
-        <tr 
-        onClick={() => this.fetchOneData(data._id)}
-        >
-          <td>{data.partName}</td>
-          <td>{id++}</td>
-          <td>{data.quantity}</td>
-          <td>{data.unitCost}</td>
-          <td>{data.serialNumber}</td>
-          <td>{data.partArea}</td>
-          <td>{data.partCategory}</td>
-          <td>{data.partDescription}</td>
-          <td>{data.location}</td>
-          <td>{data._id}</td>
-        </tr>
-      );
-    })
+    const renData = prop.partsData.length ? (
+      prop.partsData.map(data => {
+        return (
+          <tr onClick={() => this.fetchOneData(data._id)}>
+            <td>{data.partName}</td>
+            <td>{id++}</td>
+            <td>{data.quantity}</td>
+            <td>{data.unitCost}</td>
+            <td>{data.serialNumber}</td>
+            <td>{data.partArea}</td>
+            <td>{data.partCategory}</td>
+            <td>{data.partDescription}</td>
+            <td>{data.location}</td>
+            <td>{data._id}</td>
+          </tr>
+        );
+      })
     ) : (
       <div>No Inventory yet!</div>
-    )
-    return renData
-    }
+    );
+    return renData;
+  };
 
   onChange = e => {
     let data = this.state.data;
@@ -77,21 +74,22 @@ class Parts extends Component {
       for (let i = 0, l = options.length; i < l; i++) {
         if (options[i].selected && value.indexOf(options[i].value) === -1) {
           value.push(options[i].value);
-        }
-        else if (options[i].selected && value.indexOf(options[i].value) !== -1){
+        } else if (
+          options[i].selected &&
+          value.indexOf(options[i].value) !== -1
+        ) {
           let index = value.indexOf(options[i].value);
           if (index !== -1) value.splice(index, 1);
         }
       }
-    data[[e.target.name]] = value         
-    }
-    else {
-      data[[e.target.name]] = e.target.value; 
+      data[[e.target.name]] = value;
+    } else {
+      data[[e.target.name]] = e.target.value;
     }
     this.setState({
       data: data
     });
-    console.log(this.state.data)
+    console.log(this.state.data);
   };
 
   showToast = data => {
@@ -127,7 +125,8 @@ class Parts extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.response.data) {
-      if (this.props.partsData.indexOf(nextProps.response.data) === -1) this.props.partsData.unshift(nextProps.response.data);
+      if (this.props.partsData.indexOf(nextProps.response.data) === -1)
+        this.props.partsData.unshift(nextProps.response.data);
     }
     if (nextProps.response.success === true) {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
@@ -138,20 +137,20 @@ class Parts extends Component {
     }
   }
 
-  
   render() {
-    console.log("my", this.props)    
+    console.log("my", this.props);
     return (
       <div className="container side-container">
         <Sidebar />
-      <div className="breadcrumb">
+        <div className="breadcrumb">
           Parts
           <button
             type="button"
             className="btn btn-add float-right fs13 "
             onClick={this.addNew}
           >
-            <i className="fas fa-plus p5" />Add Part
+            <i className="fas fa-plus p5" />
+            Add Part
           </button>
         </div>
         <div className="overflow-x">
@@ -173,26 +172,25 @@ class Parts extends Component {
             <tbody>{this.tableData(this.props)}</tbody>
           </table>
         </div>
-        <AddPart 
-        handleChange={this.onChange} 
-        handleClick={this.handleClick}
-        data={this.state.data}
-        response={this.props.response}
-        users={this.props.users}
-        teams={this.props.teams} 
-        locations={this.props.locations}  
-        showModal={this.state.showModal}
-        handleClose={this.handleClose}             
-         />
-        <PartTabs 
-       handleShow={this.handleShow}
-       closeTabModal={this.closeTabModal}
-       TabsModal={this.state.TabsModal}
-       modalOpacity={this.state.modalOpacity}
-       partDetails={this.props.partDetails}               
-        testing={this.state.testing}
-         />
-         <Toast
+        <AddPart
+          handleChange={this.onChange}
+          handleClick={this.handleClick}
+          data={this.state.data}
+          response={this.props.response}
+          users={this.props.users}
+          teams={this.props.teams}
+          locations={this.props.locations}
+          showModal={this.state.showModal}
+          handleClose={this.handleClose}
+        />
+        <PartTabs
+          handleShow={this.handleShow}
+          closeTabModal={this.closeTabModal}
+          TabsModal={this.state.TabsModal}
+          modalOpacity={this.state.modalOpacity}
+          partDetails={this.props.partDetails}
+        />
+        <Toast
           level={this.state.toast.level}
           message={this.state.toast.message}
           visible={this.state.toast.visible}
@@ -219,16 +217,15 @@ const mapDispatchToProps = dispatch => {
     getParts: () => {
       dispatch(_getParts());
     },
-    details: (id) => {
+    details: id => {
       dispatch(_PartDetails(id));
     },
     getUsers: () => {
       dispatch(_getUsers());
-    }, 
+    },
     getTeams: () => {
       dispatch(_getTeams());
-    }
-    , 
+    },
     getLocations: () => {
       dispatch(_getLocations());
     }

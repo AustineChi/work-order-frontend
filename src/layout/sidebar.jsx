@@ -5,7 +5,7 @@ import logo from '../images/Icon.png'
 const Sidebar = () => {
     return ( 
         <div id="sidebar">
-        <div>
+        <div className="logo-area">
         <img src={logo} className="App-logo" alt="logo" />
         Rensource
         </div>
@@ -13,7 +13,7 @@ const Sidebar = () => {
         <div className="list-group list-group-flush">
             <span
             to="/assets"
-        className="list-group-item list-group-item-action bg-light"
+        className="list-group-item "
         data-toggle="collapse"
         data-target="#meter-management"
       >
@@ -44,7 +44,7 @@ Asset Management
         </li>
       </ul>
       <span
-        className="list-group-item list-group-item-action bg-light"
+        className="list-group-item  "
         data-toggle="collapse"
         data-target="#work-orders"
       >
@@ -70,7 +70,7 @@ Work Order Management
             </Link>
         </li>
         <li className="">
-        <Link className="" to="/change/log">
+        <Link className="" to="/work/order/report">
               Reports 
             </Link>
         </li>

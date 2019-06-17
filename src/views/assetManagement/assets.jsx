@@ -4,9 +4,16 @@ import AddAsset from "./assetsChildrenComponents/addAsset";
 import AssetTabs from "./assetsChildrenComponents/assetTabs";
 import AddPartsToAssets from "../../utility/addPartsToAssets";
 import { connect } from "react-redux";
-import {_addAsset, _getAssets, _assetDetails, _filterAssets, _updateAsset} from "../../actions/assetActions";
+import {
+  _addAsset,
+  _getAssets,
+  _assetDetails,
+  _filterAssets,
+  _updateAsset,
+  _resetAssetDetails
+} from "../../actions/assetActions";
 import { _getParts } from "../../actions/partActions";
-import { _filterWorkOrders} from "../../actions/workOrderActions";
+import { _filterWorkOrders } from "../../actions/workOrderActions";
 import { _getUsers } from "../../actions/userActions";
 import { _getTeams } from "../../actions/teamActions";
 import { _getLocations } from "../../actions/locationActions";
@@ -28,36 +35,37 @@ class Assets extends Component {
 
   handleClose = () => {
     this.setState({ showModal: false, modalOpacity: 1 });
-  }
+  };
 
   handleShow = () => {
     this.setState({ showModal: true, modalOpacity: 0.5 });
-  }
+  };
 
   addNew = () => {
     this.setState({ showModal: true, modalOpacity: 0.5, data: {} });
-  }
+  };
 
   showAddPartsModal = () => {
-    this.props.getParts();
     this.setState({ addPartsModal: true, modalOpacity: 0.5 });
-  }
+  };
 
   closeAddPartsModal = () => {
     this.setState({ addPartsModal: false, modalOpacity: 1 });
-  }
+  };
   closeTabModal = () => {
     this.setState({ TabsModal: false });
-  }
-  fetchOneData = (id) => {
+  };
+  fetchOneData = id => {
     this.props.details(id);
     this.setState({ TabsModal: true, modalOpacity: 1 });
-  }
+  };
 
   fetchFilteredAssets = (id, assetName) => {
-    if(id.key == "assets") this.props.getFilteredAssets( {parentAsset: assetName});
-    if(id.key == "workorders") this.props.getFilteredWorkOrders({asset: assetName});
-  }
+    if (id.key == "assets")
+      this.props.getFilteredAssets({ parentAsset: assetName });
+    if (id.key == "workorders")
+      this.props.getFilteredWorkOrders({ asset: assetName });
+  };
 
   onChange = e => {
     let data = this.state.data;
@@ -67,16 +75,17 @@ class Assets extends Component {
       for (let i = 0, l = options.length; i < l; i++) {
         if (options[i].selected && value.indexOf(options[i].value) === -1) {
           value.push(options[i].value);
-        }
-        else if (options[i].selected && value.indexOf(options[i].value) !== -1){
+        } else if (
+          options[i].selected &&
+          value.indexOf(options[i].value) !== -1
+        ) {
           let index = value.indexOf(options[i].value);
           if (index !== -1) value.splice(index, 1);
         }
       }
-    data[[e.target.name]] = value         
-    }
-    else {
-      data[[e.target.name]] = e.target.value; 
+      data[[e.target.name]] = value;
+    } else {
+      data[[e.target.name]] = e.target.value;
     }
     this.setState({
       data: data
@@ -85,15 +94,14 @@ class Assets extends Component {
 
   alternativeOnChange = e => {
     let data = this.state.data;
-      let value = data[[e.target.name]] || [];
-        if (value.indexOf(e.target.value) === -1) {
-          value.push(e.target.value);
-        }
-        else if (value.indexOf(e.target.value) !== -1){
-          let index = value.indexOf(e.target.value);
-          if (index !== -1) value.splice(index, 1);
-        }
-    data[[e.target.name]] = value;  
+    let value = data[[e.target.name]] || [];
+    if (value.indexOf(e.target.value) === -1) {
+      value.push(e.target.value);
+    } else if (value.indexOf(e.target.value) !== -1) {
+      let index = value.indexOf(e.target.value);
+      if (index !== -1) value.splice(index, 1);
+    }
+    data[[e.target.name]] = value;
     this.setState({
       data: data
     });
@@ -124,21 +132,25 @@ class Assets extends Component {
   };
 
   updateAsset = () => {
-    this.props.updateAsset(this.state.data);   
+    this.props.updateAsset(this.state.data);
+  };
+
+  componentWillMount() {
+    this.props.resetAssetDetails();
   }
 
-   componentDidMount() {
+  componentDidMount() {
     this.props.getAssets();
     this.props.getUsers();
     this.props.getTeams();
-    this.props.getLocations()
-    
-
+    this.props.getLocations();
+    this.props.getParts();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.response.data) {
-      if (this.props.assetsData.indexOf(nextProps.response.data) === -1) this.props.assetsData.unshift(nextProps.response.data);
+      if (this.props.assetsData.indexOf(nextProps.response.data) === -1)
+        this.props.assetsData.unshift(nextProps.response.data);
     }
     if (nextProps.response.success === true) {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
@@ -154,12 +166,10 @@ class Assets extends Component {
 
   render() {
     let id = 1;
-    const renData = this.props.assetsData.length ? (this.props.assetsData
-      .map(data => {
+    const renData = this.props.assetsData.length ? (
+      this.props.assetsData.map(data => {
         return (
-          <tr
-          onClick={() => this.fetchOneData(data._id)}
-          >
+          <tr onClick={() => this.fetchOneData(data._id)}>
             <td height="30px">{data.assetName}</td>
             <td>{id++}</td>
             <td>{data.location}</td>
@@ -177,9 +187,9 @@ class Assets extends Component {
           </tr>
         );
       })
-      ) : (
-        <div>No Asset yet!</div>
-      )
+    ) : (
+      <div>No Asset yet!</div>
+    );
 
     return (
       <div className="container side-container">
@@ -191,7 +201,8 @@ class Assets extends Component {
             className="btn btn-add float-right fs13 "
             onClick={this.addNew}
           >
-            <i className="fas fa-plus p5" />Add Asset
+            <i className="fas fa-plus p5" />
+            Add Asset
           </button>
         </div>
         <div className="overflow-x">
@@ -218,39 +229,39 @@ class Assets extends Component {
           </table>
         </div>
 
-        <AddAsset 
-        handleChange={this.onChange}
-        handleClick={this.handleClick}
-        data={this.state.data}
-        response={this.props.response}
-        users={this.props.users}
-        teams={this.props.teams}
-        locations={this.props.locations}
-        assets={this.props.assetsData}
-        showModal={this.state.showModal}
-        handleClose={this.handleClose}
+        <AddAsset
+          handleChange={this.onChange}
+          handleClick={this.handleClick}
+          data={this.state.data}
+          response={this.props.response}
+          users={this.props.users}
+          teams={this.props.teams}
+          locations={this.props.locations}
+          assets={this.props.assetsData}
+          showModal={this.state.showModal}
+          handleClose={this.handleClose}
         />
 
-        <AssetTabs 
-        handleShow={this.handleShow}
-        closeTabModal={this.closeTabModal}
-        TabsModal={this.state.TabsModal}
-        assetDetails={this.props.assetDetails}
-        modalOpacity={this.state.modalOpacity}
-        testing={this.state.testing} 
-        fetchFilteredAssets={this.fetchFilteredAssets}
-        filteredAssets={this.props.filteredAssets}
-        filteredWorkOrders={this.props.filteredWorkOrders}
-        showAddPartsModal={this.showAddPartsModal}
+        <AssetTabs
+          handleShow={this.handleShow}
+          closeTabModal={this.closeTabModal}
+          TabsModal={this.state.TabsModal}
+          assetDetails={this.state.data}
+          modalOpacity={this.state.modalOpacity}
+          testing={this.state.testing}
+          fetchFilteredAssets={this.fetchFilteredAssets}
+          filteredAssets={this.props.filteredAssets}
+          filteredWorkOrders={this.props.filteredWorkOrders}
+          showAddPartsModal={this.showAddPartsModal}
         />
 
-        <AddPartsToAssets 
-        handleChange={this.alternativeOnChange}
-        parts={this.props.parts}
-        addPartsModal={this.state.addPartsModal}
-        closeAddPartsModal={this.closeAddPartsModal}
-        assetDetails={this.props.assetDetails}
-        updateAsset={this.updateAsset}
+        <AddPartsToAssets
+          handleChange={this.alternativeOnChange}
+          parts={this.props.parts}
+          addPartsModal={this.state.addPartsModal}
+          closeAddPartsModal={this.closeAddPartsModal}
+          assetDetails={this.props.assetDetails || []}
+          updateAsset={this.updateAsset}
         />
 
         <Toast
@@ -289,18 +300,21 @@ const mapDispatchToProps = dispatch => {
     updateAsset: data => {
       dispatch(_updateAsset(data));
     },
+    resetAssetDetails: () => {
+      dispatch(_resetAssetDetails());
+    },
     getParts: () => {
       dispatch(_getParts());
     },
     getFilteredWorkOrders: data => {
       dispatch(_filterWorkOrders(data));
     },
-    details: (id) => {
+    details: id => {
       dispatch(_assetDetails(id));
     },
     getUsers: () => {
       dispatch(_getUsers());
-    }, 
+    },
     getTeams: () => {
       dispatch(_getTeams());
     },
@@ -309,7 +323,6 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
 
 export default connect(
   mapStateToProps,

@@ -29,7 +29,7 @@ export default function(state = initialState, action) {
           return { 
           ...state, 
           response: {},
-          assetDetails: action.payload.data
+          workOrderDetails: action.payload.data
           }
           case FILTER: 
           return {

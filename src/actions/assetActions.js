@@ -1,8 +1,6 @@
-import axios from 'axios';  
-import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER, UPDATE } from './types';
-
-const API_URL = 'http://localhost:4000/api';  
-
+import axios from 'axios';
+import { API_URL } from './apiMiddleware';
+import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER, UPDATE, RESET } from './types';
 
 export const _addAsset = (data) => dispatch => {
         axios.post(`${API_URL}/assets/add`, data)
@@ -71,5 +69,12 @@ export const _filterAssets = (data) => dispatch => {
           type: FILTER,
           payload: error
         })
+  })
+}
+
+export const _resetAssetDetails = () => dispatch => {
+  dispatch({
+    type: RESET,
+    payload: {}
   })
 }

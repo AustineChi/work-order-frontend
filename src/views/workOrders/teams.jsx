@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { _addTeam, _getTeams} from "../../actions/teamActions";
+import { _addTeam, _getTeams } from "../../actions/teamActions";
 import { _getUsers } from "../../actions/userActions";
 import Sidebar from "../../layout/sidebar";
 import AddTeam from "./addTeam";
@@ -19,11 +19,11 @@ class Teams extends Component {
 
   handleClose = () => {
     this.setState({ showModal: false });
-  }
+  };
 
   handleShow = () => {
     this.setState({ showModal: true });
-  }
+  };
 
   onChange = e => {
     let data = this.state.data;
@@ -33,21 +33,22 @@ class Teams extends Component {
       for (let i = 0, l = options.length; i < l; i++) {
         if (options[i].selected && value.indexOf(options[i].value) === -1) {
           value.push(options[i].value);
-        }
-        else if (options[i].selected && value.indexOf(options[i].value) !== -1){
+        } else if (
+          options[i].selected &&
+          value.indexOf(options[i].value) !== -1
+        ) {
           let index = value.indexOf(options[i].value);
           if (index !== -1) value.splice(index, 1);
         }
       }
-    data[[e.target.name]] = value         
-    }
-    else {
-      data[[e.target.name]] = e.target.value; 
+      data[[e.target.name]] = value;
+    } else {
+      data[[e.target.name]] = e.target.value;
     }
     this.setState({
       data: data
     });
-    console.log(this.state.data)
+    console.log(this.state.data);
   };
 
   handleClick = () => {
@@ -81,7 +82,8 @@ class Teams extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.response.data) {
-      if (this.props.teamsData.indexOf(nextProps.response.data) === -1) this.props.teamsData.unshift(nextProps.response.data);
+      if (this.props.teamsData.indexOf(nextProps.response.data) === -1)
+        this.props.teamsData.unshift(nextProps.response.data);
     }
     if (nextProps.response.success === true) {
       this.setState({ showModal: false });
@@ -91,22 +93,22 @@ class Teams extends Component {
 
   render() {
     const teamList = this.props.teamsData.length ? (
-      this.props.teamsData
-        .map(team => {
-          return (
-            <div className="card" key={team.name}>
+      this.props.teamsData.map(team => {
+        return (
+          <div className="card" key={team.name}>
             <div className="card-header">
-             {team.name}<i className="fas fa-ellipsis-v fr" />
+              {team.name}
+              <i className="fas fa-ellipsis-v fr" />
             </div>
           </div>
-          );
-        })
+        );
+      })
     ) : (
       <div>No Teams yet!</div>
     );
     return (
       <div className="container side-container">
-              <Sidebar />
+        <Sidebar />
         <div className="breadcrumb">
           Teams
           <button
@@ -114,26 +116,25 @@ class Teams extends Component {
             className="btn btn-add float-right fs13 "
             onClick={this.handleShow}
           >
-            <i className="fas fa-plus p5" />Create New Team
+            <i className="fas fa-plus p5" />
+            Create New Team
           </button>
         </div>
 
         <div className="card-box">
-        
-          <div className="card">
-          {teamList}
-          </div>
+          <div className="card">{teamList}</div>
         </div>
+        
         <AddTeam
-         handleChange={this.onChange} 
-         handleClick={this.handleClick}
-         data={this.state.data}
-         response={this.props.response}
-         users={this.props.users}
-         showModal={this.state.showModal}
-         handleClose={this.handleClose}
-          />
-           <Toast
+          handleChange={this.onChange}
+          handleClick={this.handleClick}
+          data={this.state.data}
+          response={this.props.response}
+          users={this.props.users}
+          showModal={this.state.showModal}
+          handleClose={this.handleClose}
+        />
+        <Toast
           level={this.state.toast.level}
           message={this.state.toast.message}
           visible={this.state.toast.visible}

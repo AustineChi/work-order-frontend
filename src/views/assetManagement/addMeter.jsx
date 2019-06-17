@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 const AddMeter = () => {
   return (
@@ -64,6 +63,5 @@ const AddMeter = () => {
     </div>
   );
 };
-
 
 export default AddMeter;

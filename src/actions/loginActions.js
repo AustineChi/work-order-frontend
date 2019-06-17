@@ -1,4 +1,5 @@
 import { LOGIN_DETAILS } from './types';
+import { API_URL } from './apiMiddleware';
 
 export const loginUser = ()=> dispatch=>  {
   fetch('')

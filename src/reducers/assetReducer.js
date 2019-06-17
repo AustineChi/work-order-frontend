@@ -1,4 +1,4 @@
-import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER, UPDATE } from '../actions/types';
+import { ADD_ASSET, GET_ASSETS, DETAILS, FILTER, UPDATE, RESET } from '../actions/types';
 
 const initialState = {
 assets: [],
@@ -37,6 +37,11 @@ export default function(state = initialState, action) {
           return {
               ...state,
               filteredAssets: action.payload,
+          }
+          case RESET:
+          return { 
+          ...state, 
+          assetDetails: action.payload
           }
         default: 
         return state;
