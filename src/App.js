@@ -24,8 +24,8 @@ function App() {
         <Header />
         <main>
           <Route exact path="/" component={ChangeLog} />
-          <Route path="/meters" component={Meters} />
           <Route path="/change/log" component={ChangeLog} />
+          <Route path="/meters" component={Meters} />
           <Route path="/login" component={Login} />
           <Route path="/work/orders" component={WorkOrders} />
           <Route path="/work/order/report" component={WorkOrderReport} />
