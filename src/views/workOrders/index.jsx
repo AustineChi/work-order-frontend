@@ -20,6 +20,7 @@ import Toast from "../../utility/toast";
 class Index extends Component {
   state = {
     data: {},
+    search: "",
     showModal: false,
     TabsModal: false,
     addPartsModal: false,
@@ -181,6 +182,12 @@ class Index extends Component {
     this.props.addNewWorkOrder(this.state.data);
   };
 
+  onsearch = (e) => {
+    this.setState({ search: e.target.value });
+
+    console.log(e.target.value)
+  };
+
   updateWorkOrderParts = () => {
     this.props.updateWorkOrderParts(this.state.data);
   };
@@ -207,9 +214,11 @@ class Index extends Component {
   }
 
   render() {
-    console.log("props world", this.props);
+    const filteredWorkOrders = this.props.workOrdersData.filter(workOrder => {
+      return workOrder.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+    })
     const renData = this.props.workOrdersData.length ? (
-      this.props.workOrdersData.map(data => {
+      filteredWorkOrders.map(data => {
         return (
           <tr
             onClick={() => this.fetchOneData(data._id)}
@@ -247,6 +256,9 @@ class Index extends Component {
             <i className="fas fa-plus p5" />
             Create Work Order
           </button>
+        </div>
+        <div>
+          <input onChange={this.onsearch}  className="float-right" type="text" name="search" id="" placeholder="search..."/>
         </div>
         <table className="table table-striped">
           <thead>

@@ -23,7 +23,8 @@ function App() {
       <BrowserRouter>
         <Header />
         <main>
-          <Route exact path="/meters" component={Meters} />
+          <Route exact path="/" component={ChangeLog} />
+          <Route path="/meters" component={Meters} />
           <Route path="/change/log" component={ChangeLog} />
           <Route path="/login" component={Login} />
           <Route path="/work/orders" component={WorkOrders} />

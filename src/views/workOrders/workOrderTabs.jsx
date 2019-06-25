@@ -144,12 +144,66 @@ const WorkOrderTabs = ({
             </div>
           </Tab>
           <Tab eventKey={"comments"} title="Comments">
-          <textarea
+          <div class="card mb-4">
+                  <h6 class="card-header">Comments</h6>
+                  <div class="card-body">
+                    <div class="media pb-1 mb-3">
+                      <div class="media-body ml-3">
+                        <a href="javascript:void(0)">Amanda Warner</a>
+                        
+                        <p class="my-1">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.</p>
+                        <div class="clearfix">
+                          <a href="javascript:void(0)" class="float-right text-lightest small">
+                            <span class="ion ion-ios-thumbs-down"></span>
+                          </a>
+                          <a href="javascript:void(0)" class="float-right text-lightest small">
+                            <span class="ion ion-ios-thumbs-up mr-2"></span>
+                          </a>
+                          <span class="float-left text-muted small">2 hours ago</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="media pb-1 mb-3">
+                      <div class="media-body ml-3">
+                        <a href="javascript:void(0)">Hallie Lewis</a>
+                        <p class="my-1">Vivendum torquatos ut nec, sit audiam deterruisset ei, cu sed nibh autem scriptorem. Ea quo vidit deleniti constituto, ex qui malis mollis iudicabit, viris fabellas id has.</p>
+                        <div class="clearfix">
+                          <a href="javascript:void(0)" class="float-right text-lightest small">
+                            <span class="ion ion-ios-thumbs-down"></span>
+                          </a>
+                          <a href="javascript:void(0)" class="float-right text-lightest small">
+                            <span class="ion ion-ios-thumbs-up mr-2"></span>
+                          </a>
+                          <span class="float-left text-muted small">2 hours ago</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="media">
+                      <div class="media-body ml-3">
+                        <a href="javascript:void(0)">Alice Hampton</a>
+                        <p class="my-1">Eam facilis laboramus reprehendunt ei, ex esse fastidii per.</p>
+                        <div class="clearfix">
+                          <a href="javascript:void(0)" class="float-right text-lightest small">
+                            <span class="ion ion-ios-thumbs-down"></span>
+                          </a>
+                          <a href="javascript:void(0)" class="float-right text-lightest small">
+                            <span class="ion ion-ios-thumbs-up mr-2"></span>
+                          </a>
+                          <span class="float-left text-muted small">2 hours ago</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="javascript:void(0)" class="card-footer d-block text-center text-body small font-weight-semibold">SHOW MORE</a>
+                </div>
+                <div>
+                <textarea
             // onChange={}
             name="comment"
             placeholder="Add comment"
             className="wo-comment-box"
           />
+                </div>
 
           </Tab>
         </Tabs>

@@ -1,11 +1,10 @@
 import axios from 'axios';  
 import { GET_METERS , GET_METER_CHANGE_LOG} from './types';
-
-const API_URL = 'https://metermanager.staging.rensource.energy/api';  
+import { METER_MANAGER_API } from './apiMiddleware';
 
 
 export const _getMeters = () => dispatch =>  {
-     axios.get(`${API_URL}/Meter/search/`,
+     axios.get(`${METER_MANAGER_API}/Meter/search/`,
      { headers: {
         "APIKey" : "CZ]]JUphGdh&_hLg7vXtBtSUmGmXTQ@rVTy4h[[}{wH2c355KEC5Y)"
       }
@@ -24,7 +23,7 @@ export const _getMeters = () => dispatch =>  {
 }
 
 export const _getMeterChangeLog = () => dispatch =>  {
-    axios.get(`${API_URL}/Meter/changelogs/search`,
+    axios.get(`${METER_MANAGER_API}/Meter/changelogs/search`,
     { headers: {
        "APIKey" : "CZ]]JUphGdh&_hLg7vXtBtSUmGmXTQ@rVTy4h[[}{wH2c355KEC5Y)"
      }

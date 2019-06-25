@@ -17,7 +17,7 @@ const Sidebar = () => {
         data-toggle="collapse"
         data-target="#meter-management"
       >
-Asset Management       
+Assets Management 
  <span className="pull-right">
  <i className="fas fa-caret-down"></i>
          </span>

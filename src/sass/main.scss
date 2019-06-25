@@ -436,6 +436,22 @@ textarea:focus{
 .wik1 {
 margin: 10px 0
 }
+.wik2 {
+  height: 150px;
+  position: relative;
+  text-align: center;
+  }
+  .wik3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    span {
+      text-align: center;
+      display: block;
+      padding: 5px 0
+    }
+    }
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -607,7 +623,5 @@ label {
   width: 150px
 }
 .wo-comment-box {
-  position: absolute;
-    bottom: 12px;
-    max-width: 600px;
+    max-width: 700px;
 }

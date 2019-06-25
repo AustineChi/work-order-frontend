@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
         case GET_WORK_ORDERS: 
         return {
             ...state,
-            workOrders: action.payload,
+            workOrders: action.payload.itemsList,
         }
         case ADD_WORK_ORDER:
           return { 
