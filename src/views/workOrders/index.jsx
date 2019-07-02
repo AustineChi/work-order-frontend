@@ -16,7 +16,8 @@ import {
 import { _getLocations } from "../../actions/locationActions";
 
 import Toast from "../../utility/toast";
-import { getTimeFromObjectID } from "../../utility/functions";
+import moment from "moment";
+import { _getTimeFromObjectID } from "../../utility/functions";
 
 class Index extends Component {
   state = {
@@ -192,7 +193,11 @@ class Index extends Component {
   updateWorkOrderParts = () => {
     this.props.updateWorkOrderParts(this.state.data);
   };
-  componentDidMount() {
+
+getTimeFromObjectID = (id) => {
+//console.log("woekoe",_getTimeFromObjectID(id))
+}
+componentDidMount() {
     this.props.getAssets();
     this.props.getUsers();
     this.props.getWorkOrders();
@@ -216,10 +221,10 @@ class Index extends Component {
 
   render() {
     console.log(this.props.workOrdersData, "wirk ");
-    const filteredWorkOrders = this.props.workOrdersData.filter(workOrder => {
+    let filteredWorkOrders = this.props.workOrdersData.filter(workOrder => {
       return workOrder.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
     })
-    const renData = this.props.workOrdersData.length ? (
+    let renData = this.props.workOrdersData.length ? (
       filteredWorkOrders.map(data => {
         return (
           <tr
@@ -236,8 +241,8 @@ class Index extends Component {
             <td>{data.priority}</td>
             <td>{data.assignedTo}</td>
             <td>{data.location}</td>
-            <td>{data.updated}</td>
-            <td>{getTimeFromObjectID(data.created)}</td>
+            <td>{moment(data.updated).format("D MMMM YYYY")}</td>
+            <td>{this.getTimeFromObjectID(data.created)}</td>
           </tr>
         );
       })
