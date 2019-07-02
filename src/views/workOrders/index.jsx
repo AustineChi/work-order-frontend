@@ -16,6 +16,7 @@ import {
 import { _getLocations } from "../../actions/locationActions";
 
 import Toast from "../../utility/toast";
+import { getTimeFromObjectID } from "../../utility/functions";
 
 class Index extends Component {
   state = {
@@ -214,6 +215,7 @@ class Index extends Component {
   }
 
   render() {
+    console.log(this.props.workOrdersData, "wirk ");
     const filteredWorkOrders = this.props.workOrdersData.filter(workOrder => {
       return workOrder.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
     })
@@ -235,7 +237,7 @@ class Index extends Component {
             <td>{data.assignedTo}</td>
             <td>{data.location}</td>
             <td>{data.updated}</td>
-            <td>{data.created}</td>
+            <td>{getTimeFromObjectID(data.created)}</td>
           </tr>
         );
       })

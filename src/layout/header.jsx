@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import logo2 from '../images/Rensource.gif';
 
-import logo from '../images/logo.jpg';
-import logo2 from '../images/Rensource.gif'
 const Header = () => {
     return ( 
         <nav>
