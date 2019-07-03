@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  nginx:
+    build: .
+    ports:
+      - 80:8080
+    environment:
+      - API_URL=http://localhost:4000/api
+      - METER_MANAGER_API =https://metermanager.staging.rensource.energy/api
