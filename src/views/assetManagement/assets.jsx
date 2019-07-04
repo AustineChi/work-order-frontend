@@ -192,7 +192,7 @@ class Assets extends Component {
     );
 
     return (
-      <div className="container side-container">
+      <div className="side-container">
         <Sidebar />
         <div className="breadcrumb">
           Assets

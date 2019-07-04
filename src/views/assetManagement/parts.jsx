@@ -140,7 +140,7 @@ class Parts extends Component {
   render() {
     console.log("my", this.props);
     return (
-      <div className="container side-container">
+      <div className=" side-container">
         <Sidebar />
         <div className="breadcrumb">
           Parts

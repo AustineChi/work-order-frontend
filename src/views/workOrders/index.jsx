@@ -251,7 +251,7 @@ componentDidMount() {
     );
 
     return (
-      <div className="container side-container">
+      <div className=" side-container">
         <Sidebar />
         <div className="breadcrumb">
           Work Orders

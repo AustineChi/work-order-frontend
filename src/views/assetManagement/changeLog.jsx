@@ -28,7 +28,7 @@ class ChangeLog extends Component {
         <div>Meter Change  Log Data Not Available!</div>
       );
     return (
-      <div className="container side-container">
+      <div className="side-container">
         <Sidebar />
         <div className="breadcrumb">Meter Change Log</div>
         <table className="table table-striped">

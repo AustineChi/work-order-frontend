@@ -59,9 +59,12 @@ html {
     color: #61dafb;
   }
  .side-container {
-  width: 90%;
-  position: relative;
-  margin-right: 2%;
+  // width: 90%;
+  // position: relative;
+  // margin-right: 2%;
+  width: 79%;
+    left: 20%;
+    position: relative;
  }
   .body-wrapper {
     font-family: "Lato", sans-serif;
@@ -333,10 +336,15 @@ transition: all 1s;
 #sidebar {
   z-index: 1000;
   position: fixed;
-  left: 269px;
-  width: 270px;
+  // left: 269px;
+  // width: 270px;
+  left: 19%;
+  width: 19%;
   height: 100vh;
-  top: 0;  margin-left: -270px;
+  margin-left: -19%;
+  height: 100vh;
+  // margin-left: -270px;
+  top: 0;  
   background: #073553;
   color: #fff;
   -webkit-transition: all 0.5s ease;

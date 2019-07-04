@@ -31,7 +31,7 @@ class Index extends Component {
     );
 
     return (
-      <div className="container side-container">
+      <div className=" side-container">
         <Sidebar />
         <AddMeter />
         <div className="breadcrumb">

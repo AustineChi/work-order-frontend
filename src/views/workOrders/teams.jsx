@@ -107,7 +107,7 @@ class Teams extends Component {
       <div>No Teams yet!</div>
     );
     return (
-      <div className="container side-container">
+      <div className="side-container">
         <Sidebar />
         <div className="breadcrumb">
           Teams

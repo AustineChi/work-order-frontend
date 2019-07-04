@@ -88,7 +88,7 @@ class Locations extends Component {
       <div>No Locations yet!</div>
     );
     return (
-      <div className="container side-container">
+      <div className="side-container">
         <Sidebar />
         <AddLocation
           handleChange={this.onChange}
