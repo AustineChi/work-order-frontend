@@ -1,0 +1,87 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn init
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/augustine/.composer/vendor/bin:/Users/augustine/.composer/vendor/bin:
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  10.15.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:125850:13)
+      at Interface.emit (events.js:189:13)
+      at Interface._ttyWrite (readline.js:783:16)
+      at ReadStream.onkeypress (readline.js:168:10)
+      at ReadStream.emit (events.js:189:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1022:36)
+      at ReadStream.emit (events.js:189:13)
+      at addChunk (_stream_readable.js:284:12)
+
+npm manifest: 
+  {
+    "name": "rensource-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "@material-ui/core": "^3.9.3",
+      "axios": "^0.19.0",
+      "bootstrap": "^4.3.1",
+      "bson-objectid": "^1.3.0",
+      "env-cmd": "^9.0.3",
+      "i": "^0.3.6",
+      "jquery": "^3.4.1",
+      "moment": "^2.24.0",
+      "npm": "^6.9.0",
+      "popper.js": "^1.15.0",
+      "react": "^16.8.6",
+      "react-bootstrap": "^1.0.0-beta.9",
+      "react-dom": "^16.8.6",
+      "react-redux": "^7.0.3",
+      "react-router-dom": "^5.0.0",
+      "react-scripts": "3.0.0",
+      "redux": "^4.0.1",
+      "redux-thunk": "^2.3.0",
+      "yarn": "^1.16.0"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject",
+      "dev": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start"
+    },
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    },
+    "devDependencies": {
+      "@fortawesome/fontawesome-free": "^5.8.1",
+      "node-sass": "^4.12.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
