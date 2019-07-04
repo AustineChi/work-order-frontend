@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sidebar from "../../layout/sidebar";
 import { connect } from "react-redux";
 import { _getMeterChangeLog } from "../../actions/meterActions" ;
+import moment from "moment";
 
 class ChangeLog extends Component {
 
@@ -15,8 +16,8 @@ class ChangeLog extends Component {
     const renData = this.props.changeLog.results ? (this.props.changeLog.results.map(data => {
       return (
         <tr>
-          <td>{data.changeDate}</td>
-          <td>{data.Time}</td>
+          <td>{moment(data.changeDate).format("D MMMM YYYY")}</td>
+          <td>{moment(data.changeDate).format("LT")}</td>
           <td>{data.changeInitiator}</td>
           <td>{data.oldMeterIdentifier}</td>
           <td>{data.newMeterIdentifier}</td>

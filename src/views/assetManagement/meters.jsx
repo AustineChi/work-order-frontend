@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { _getMeters } from "../../actions/meterActions" ;
 import Sidebar from "../../layout/sidebar";
 import AddMeter from "./addMeter";
+import moment from "moment";
 
 class Index extends Component {
 
@@ -18,7 +19,7 @@ class Index extends Component {
           <td>
             <input type="checkbox" name="vehicle2" value="Car" />
           </td>
-          <td>{data.createdDate}</td>
+          <td>{moment(data.changeDate).format("D MMMM YYYY")}</td>
           <td>{data.identifier}</td>
           <td>{data.colorCode}</td>
           <td>{data.brandCode}</td>
