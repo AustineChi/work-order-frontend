@@ -1,47 +1,35 @@
-# FROM node:10 
-# WORKDIR /app
-# ENV PATH /app/node_modules/.bin:$PATH
-# COPY package.json /app/package.json
-# RUN npm install --silent
-# FROM node:10 
-# WORKDIR /app
-# ENV PATH /app/node_modules/.bin:$PATH
-# COPY package.json /app/package.json
-# RUN npm install --silent
-# RUN npm install react-scripts@3.0.1 -g --silent
-# CMD ["npm", "start"]
+# => Build container
+FROM node:alpine as builder
+WORKDIR /app
+COPY package.json .
+COPY yarn.lock .
+RUN yarn
+COPY . .
+RUN yarn build
 
-# build environment
-FROM node:12.2.0-alpine as build
+# => Run container
+FROM nginx:1.15.2-alpine
 
-COPY . /src/app
-WORKDIR /src/app
+# Nginx config
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
 
-RUN yarn -v
-RUN yarn --ignore-optional
+# Static build
+COPY --from=builder /app/build /usr/share/nginx/html/
 
+# Default port exposure
+EXPOSE 80
 
-RUN yarn run build
-FROM nginx:latest
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html
+COPY ./env.sh .
+COPY .env .
 
-# Make /var/cache/nginx/ writable by non-root users
-RUN chgrp nginx /var/cache/nginx/
-RUN chmod -R g+w /var/cache/nginx/
+# Add bash
+RUN apk add --no-cache bash
 
-# Write the PID file to a location where regular users have write access.
-RUN sed --regexp-extended --in-place=.bak 's%^pid\s+/var/run/nginx.pid;%pid /var/tmp/nginx.pid;%' /etc/nginx/nginx.conf
-
-COPY --from=builder /src/app/build /var/www/frontend
-RUN chgrp nginx /var/www/frontend
-RUN chmod -R g+w /var/www/frontend
-
-COPY nginx-proxy.conf /etc/nginx/conf.d/default.conf
-
-# RUNTIME ENV
-COPY env.sh /var/www/frontend
-COPY .env /var/www/frontend
-RUN chmod +x /var/www/frontend/env.sh
-WORKDIR /var/www/frontend
+# Make our shell script executable
+RUN chmod +x env.sh
 
 # Start Nginx server
-CMD ["/bin/bash", "-c", "/var/www/frontend/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]

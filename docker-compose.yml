@@ -1,10 +1,9 @@
-version: "3"
-
+version: "3.2"
 services:
-  nginx:
-    build: .
+  cra-runtime-environment-variables:
+    image: erp-frontend
     ports:
-      - 80:8080
+      - "5000:80"
     environment:
-      - API_URL=http://localhost:4000/api
-      - METER_MANAGER_API =https://metermanager.staging.rensource.energy/api
+      - "API_URL=http://localhost:4000/api"
+      - "METER_MANAGER_API =https://metermanager.staging.rensource.energy/api"
