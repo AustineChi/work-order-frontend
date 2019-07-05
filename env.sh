@@ -16,13 +16,13 @@ do
   if printf '%s\n' "$line" | grep -q -e '='; then
     varname=$(printf '%s\n' "$line" | sed -e 's/=.*//')
     varvalue=$(printf '%s\n' "$line" | sed -e 's/^[^=]*=//')
-    echo "variable :  ... $varname"
-    echo "variable value:  ... $varvalue"
+    echo "varname :  ... $varname ..."
+    echo "varvalue :  ... $varvalue ..."
   fi
 
   # Read value of current variable if exists as Environment variable
   value=$(printf '%s\n' "${!varname}")
-  echo "another value $value"
+  echo "value from environment : ... $value"
   # Otherwise use value from .env file
   [[ -z $value ]] && value=${varvalue}
   
