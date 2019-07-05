@@ -11,14 +11,18 @@ echo "window._env_ = {" >> ./env-config.js
 # Each line represents key=value pairs
 while read -r line || [[ -n "$line" ]];
 do
+  echo "line : ... $line"
   # Split env variables by character `=`
   if printf '%s\n' "$line" | grep -q -e '='; then
     varname=$(printf '%s\n' "$line" | sed -e 's/=.*//')
     varvalue=$(printf '%s\n' "$line" | sed -e 's/^[^=]*=//')
+    echo "variable :  ... $varname"
+    echo "variable value:  ... $varvalue"
   fi
 
   # Read value of current variable if exists as Environment variable
   value=$(printf '%s\n' "${!varname}")
+  echo "another value $value"
   # Otherwise use value from .env file
   [[ -z $value ]] && value=${varvalue}
   
