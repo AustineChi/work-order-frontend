@@ -56,7 +56,7 @@ class Parts extends Component {
             <td>{data.partCategory}</td>
             <td>{data.partDescription}</td>
             <td>{data.location}</td>
-            <td>{data._id}</td>
+            <td>{"30 August 2019"}</td>
           </tr>
         );
       })

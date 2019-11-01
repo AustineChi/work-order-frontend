@@ -30,12 +30,12 @@ const PartTabs = ({
             <Details partDetails={partDetails} />
           </Tab>
           <Tab eventKey={2} title="Work Orders">
-            No Work Orders associated to this Asset
+            No Work Orders associated to this part
             <div className="card-box"></div>
           </Tab>
           <Tab eventKey={3} title="Assets">
             <div className="card-box"></div>
-            No Subassets assigned to this Asset
+            No Assets assigned to this part
           </Tab>
         </Tabs>
       </Modal.Body>
