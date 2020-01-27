@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="footer">
         <div className="container">
         <div>
-        <p className="footer-block center-align-text">© 2019 - Rensource Distributed Energy Limited</p>
+        <p className="footer-block center-align-text">© 2019 - Austine's work order system</p>
     </div>
         </div>
       </footer>

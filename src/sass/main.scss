@@ -7,7 +7,6 @@ $color-gray-light: #F5F5FA;
 $color-gray-light-2: rgb(232, 240, 254);
 $color-red: #F26E6E;
 $color-green: #5cb85c;
-$color-blue: #073553;
 $height-footer: 60px;
 * {
   margin: 0;
@@ -26,7 +25,7 @@ html {
   width: 100%;
   position: absolute;
   height: $height-footer;
-  background-color: $color-blue;
+  background-color: $background-color-dark;
   .footer-block {
     margin: 20px 0;
     color: $color-white
@@ -150,7 +149,7 @@ animation-fill-mode: backwards
 .btn-login {
   width: 90%;
   height: 40px;
-  background-color: $color-blue;
+  background-color: $background-color-dark;
   color: $color-yellow;
   margin: 20px 0;
   padding: 10px;
@@ -240,7 +239,7 @@ transition: all 1s;
     }
   }
   .list-group-item {
-    background-color: $color-blue 
+    background-color: $color-green
   }
   nav {
     padding: 0.25rem 0;
@@ -258,7 +257,7 @@ transition: all 1s;
       display: block;
       padding: 7px 5px;
       margin: 20px 10px;
-      color: $color-blue;
+      color: $background-color-dark;
       font-family: 'Roboto', sans-serif;
       font-size: 14px;
       line-height: 32px;
@@ -345,14 +344,14 @@ transition: all 1s;
   height: 100vh;
   // margin-left: -270px;
   top: 0;  
-  background: #073553;
+  background: $background-color-dark;
   color: #fff;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
   .logo-area {
-    padding: 0.25rem 10px;
+    padding: 2.45rem 10px;
     font-weight: 700;
     font-size: 21px
 
@@ -361,7 +360,7 @@ transition: all 1s;
 }
 
 .breadcrumb {
-  background-color: #073553;
+  background-color: $background-color-dark;
   color: #C4C4C4;
   font-weight: 700;
   position: relative;

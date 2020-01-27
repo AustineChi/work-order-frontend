@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import store from "./store/";
 import Header from "./layout/header";
 import Login from "./views/loginPage/index";
-import ChangeLog from "./views/assetManagement/changeLog";
 import Meters from "./views/assetManagement/meters";
 import WorkOrders from "./views/workOrders/index";
 import Locations from "./views/workOrders/locations";
@@ -23,8 +22,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <main>
-          <Route exact path="/" component={ChangeLog} />
-          <Route path="/change/log" component={ChangeLog} />
+          <Route exact path="/" component={WorkOrders} />
           <Route path="/meters" component={Meters} />
           <Route path="/login" component={Login} />
           <Route path="/work/orders" component={WorkOrders} />

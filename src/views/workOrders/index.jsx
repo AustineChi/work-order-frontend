@@ -83,7 +83,6 @@ class Index extends Component {
   };
 
   handleUpdate = () => {
-    console.log("update function");
   };
 
   onChange = e => {
@@ -109,13 +108,12 @@ class Index extends Component {
     this.setState({
       data: data
     });
-    console.log(this.state.data);
   };
 
   getPartQuantity = e => {
     let data = this.state.data;
     let value = data[[e.target.getAttribute("data-tag")]] || [];
-    let obj = value.find(data => data.partName == e.target.id);
+    let obj = value.find(data => data.partName === e.target.id);
     if (obj) {
       obj.quantity = e.target.value;
       this.setState({
@@ -137,7 +135,7 @@ class Index extends Component {
   alternativeOnChange = e => {
     let data = this.state.data;
     let value = data[[e.target.getAttribute("data-tag")]] || [];
-    let obj = value.find(data => data.partName == e.target.value);
+    let obj = value.find(data => data.partName === e.target.value);
     if (obj) {
       let index = value.indexOf(obj);
       if (index !== -1) value.splice(index, 1);
@@ -157,7 +155,6 @@ class Index extends Component {
     this.setState({
       data: data
     });
-    console.log("objs", this.state.data);
   };
 
   showToast = data => {
@@ -187,7 +184,6 @@ class Index extends Component {
   onsearch = (e) => {
     this.setState({ search: e.target.value });
 
-    console.log(e.target.value)
   };
 
   updateWorkOrderParts = () => {
@@ -195,7 +191,6 @@ class Index extends Component {
   };
 
 getTimeFromObjectID = (id) => {
-//console.log("woekoe",_getTimeFromObjectID(id))
 }
 componentDidMount() {
     this.props.getAssets();
@@ -215,12 +210,10 @@ componentDidMount() {
     }
     if (nextProps.workOrderDetails) {
       this.setState({ data: nextProps.workOrderDetails });
-      console.log(nextProps.workOrderDetails, "snako");
     }
   }
 
   render() {
-    console.log(this.props.workOrdersData, "wirk ");
     let filteredWorkOrders = this.props.workOrdersData.filter(workOrder => {
       return workOrder.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
     })
@@ -247,7 +240,11 @@ componentDidMount() {
         );
       })
     ) : (
-      <div>No Work Orders yet!</div>
+      <tr>
+        <td>
+        No Work Orders yet!
+        </td>
+        </tr>
     );
 
     return (

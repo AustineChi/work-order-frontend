@@ -48,7 +48,6 @@ class Teams extends Component {
     this.setState({
       data: data
     });
-    console.log(this.state.data);
   };
 
   handleClick = () => {
@@ -75,6 +74,7 @@ class Teams extends Component {
     );
   };
 
+
   componentDidMount() {
     this.props.getTeams();
     this.props.getUsers();
@@ -91,7 +91,10 @@ class Teams extends Component {
     }
   }
 
+
+
   render() {
+
     const teamList = this.props.teamsData.length ? (
       this.props.teamsData.map(team => {
         return (

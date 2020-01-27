@@ -11,7 +11,6 @@ const WorkOrderTabs = ({
   closeTabModal,
   showAddPartsModal
 }) => {
-  console.log("the sip", workOrderDetails.parts);
   let workOrderParts = workOrderDetails.parts || [];
   const _parts = workOrderParts.length
     ? workOrderParts.map((part, i) => {
