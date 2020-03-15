@@ -199,26 +199,24 @@ componentDidMount() {
     this.props.getLocations();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.response.data) {
-      if (this.props.workOrdersData.indexOf(nextProps.response.data) === -1)
-        this.props.workOrdersData.unshift(nextProps.response.data);
+  componentDidUpdate(prevProps) {
+    if (prevProps.response.data !== this.props.response.data) {
+      if (this.props.workOrdersData.indexOf(this.props.response.data) === -1)
+        this.props.workOrdersData.unshift(this.props.response.data);
     }
-    if (nextProps.response.success === true) {
+    if (prevProps.response.success !== this.props.response.success && this.props.response.success === true) {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
-      setTimeout(() => this.showToast(nextProps.response), 2000);
+      setTimeout(() => this.showToast(this.props.response), 2000);
     }
-    if (nextProps.workOrderDetails) {
-      this.setState({ data: nextProps.workOrderDetails });
+    if (prevProps.workOrderDetails !==this.props.workOrderDetails) {
+      this.setState({ data: this.props.workOrderDetails });
     }
   }
 
   render() {
-    let filteredWorkOrders = this.props.workOrdersData.filter(workOrder => {
-      return workOrder.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
-    })
+
     let renData = this.props.workOrdersData.length ? (
-      filteredWorkOrders.map(data => {
+      this.props.workOrdersData.map(data => {
         return (
           <tr
             onClick={() => this.fetchOneData(data._id)}

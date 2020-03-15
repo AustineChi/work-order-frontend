@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { _addTeam, _getTeams } from "../../actions/teamActions";
 import { _getUsers } from "../../actions/userActions";
 import Sidebar from "../../layout/sidebar";
-import AddTeam from "./addTeam";
-import Toast from "../../utility/toast";
 
 class Teams extends Component {
   state = {

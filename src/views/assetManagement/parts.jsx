@@ -123,17 +123,17 @@ class Parts extends Component {
     this.props.getLocations();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.response.data) {
-      if (this.props.partsData.indexOf(nextProps.response.data) === -1)
-        this.props.partsData.unshift(nextProps.response.data);
+  componentDidUpdate(prevProps) {
+    if (prevProps.response.data !== this.props.response.data) {
+      if (this.props.partsData.indexOf(this.props.response.data) === -1)
+        this.props.partsData.unshift(this.props.response.data);
     }
-    if (nextProps.response.success === true) {
+    if ( prevProps.response.success !== this.props.response.success && this.props.response.success === true) {
       this.setState({ showModal: false, data: {}, modalOpacity: 1 });
-      setTimeout(() => this.showToast(nextProps.response), 2000);
+      setTimeout(() => this.showToast(this.props.response), 2000);
     }
-    if (nextProps.partDetails) {
-      this.setState({ data: nextProps.partDetails });
+    if (prevProps.partDetails !== this.props.partDetails) {
+      this.setState({ data: this.props.partDetails });
     }
   }
 

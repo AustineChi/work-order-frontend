@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 class Toast extends Component {
+  state = { 
+    visible: '',
+   }
+
   getIcon() {
     switch (this.props.level) {
       case "warning":
@@ -9,19 +13,21 @@ class Toast extends Component {
         return "http://svgshare.com/i/19E.svg";
       case "success":
         return "http://svgshare.com/i/19y.svg";
+      default: 
+      return ''
     }
+
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.visible !== nextProps.visible) {
-      this.setState({
-        visible: nextProps.visible
-      });
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (nextProps.visible !== prevState.visible) {
+        return { visible: nextProps.visible };
     }
-  }
+    else return null; 
+}
+ 
 
   render() {
-    console.log("props", this.props);
     let classes = `notif ${this.props.level} `;
     classes += this.props.visible ? "visible" : "not-visible";
     return (

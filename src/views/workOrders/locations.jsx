@@ -59,14 +59,14 @@ class Locations extends Component {
     this.props.getLocations();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.response.data) {
-      if (this.props.locationsData.indexOf(nextProps.response.data) === -1)
-        this.props.locationsData.unshift(nextProps.response.data);
+  componentDidUpdate(prevProps)  {
+    if ( prevProps.response.data  !==this.props.response.data) {
+      if (this.props.locationsData.indexOf(this.props.response.data) === -1)
+        this.props.locationsData.unshift(this.props.response.data);
     }
-    if (nextProps.response.success === true) {
+    if (prevProps.response.success !== this.props.response.success && this.props.response.success === true) {
       this.setState({ showModal: false, data: {} });
-      setTimeout(() => this.showToast(nextProps.response), 2000);
+      setTimeout(() => this.showToast(this.props.response), 2000);
     }
   }
 

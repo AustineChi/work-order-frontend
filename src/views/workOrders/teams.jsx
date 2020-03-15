@@ -80,14 +80,14 @@ class Teams extends Component {
     this.props.getUsers();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.response.data) {
-      if (this.props.teamsData.indexOf(nextProps.response.data) === -1)
-        this.props.teamsData.unshift(nextProps.response.data);
+  componentDidUpdate(prevProps) {
+    if (this.props.response.data !== prevProps.response.data) {
+      if (this.props.teamsData.indexOf(this.props.response.data) === -1)
+        this.props.teamsData.unshift(this.props.response.data);
     }
-    if (nextProps.response.success === true) {
+    if (this.props.response.success !== prevProps.response.success && this.props.response.success === true) {
       this.setState({ showModal: false });
-      setTimeout(() => this.showToast(nextProps.response), 2000);
+      setTimeout(() => this.showToast(this.props.response), 2000);
     }
   }
 
